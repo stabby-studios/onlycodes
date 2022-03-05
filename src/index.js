@@ -5,29 +5,42 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
 
 /* Route Elements */
-import About from './routes/about';
-import Login from './routes/login';
 import Home from './routes/home';
+import Feed from './routes/feed/feed';
+import Settings from './routes/settings';
+import Team from './routes/team'
+
+/* Chakra ui */
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
+
 
 /*  Logging etc  */
 import reportWebVitals from './reportWebVitals';
 
 import './index.css'
+import theme from './theme';
+
+/* Chakra ui theming */
+
 
 const root = document.getElementById('root');
 render(
-    <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<App />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/login" element={<Login />} />
+    <ChakraProvider theme={theme}>
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<App />}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/Feed" element={<Feed />} />
+                    <Route path="/Settings" element={<Settings />} />
+                    <Route path="/Team" element={<Team />} />
 
-                {/* No match Route should always be at the bottom. */}
-                <Route path="*" element={<div>404 Page Not Found</div>} />
-            </Route>
-        </Routes>
-    </BrowserRouter>,
+                    {/* No match Route should always be at the bottom. */}
+                    <Route path="*" element={<div>404 Page Not Found</div>} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    </ChakraProvider>,
     root
 );
 
