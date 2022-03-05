@@ -38,7 +38,7 @@ export default function Navbar() {
 
     return (
         <>
-            <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+            <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} position="fixed" width="100%" zIndex="9999">
                 <Flex h={20} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}
@@ -74,10 +74,37 @@ export default function Navbar() {
                                 />
                             </MenuButton>
                             <MenuList>
-                                <MenuItem>Profile</MenuItem>
-                                <MenuItem>FAQ</MenuItem>
+                                <MenuItem>
+                                    <Link href='/someusername' px={2}
+                                        py={1}
+                                        rounded={'md'}
+                                        _hover={{
+                                            textDecoration: 'none',
+                                        }}>
+                                        Profile
+                                    </Link>
+                                </MenuItem>
+                                <MenuItem>
+                                    <Link href='/faq' px={2}
+                                        py={1}
+                                        rounded={'md'}
+                                        _hover={{
+                                            textDecoration: 'none',
+                                        }}>
+                                        FAQ
+                                    </Link>
+                                </MenuItem>
                                 <MenuDivider />
-                                <MenuItem>Preferences</MenuItem>
+                                <MenuItem>
+                                    <Link href='/preferences' px={2}
+                                        py={1}
+                                        rounded={'md'}
+                                        _hover={{
+                                            textDecoration: 'none',
+                                        }}>
+                                        Preferences
+                                    </Link>
+                                </MenuItem>
                             </MenuList>
                         </Menu>
                     </Flex>

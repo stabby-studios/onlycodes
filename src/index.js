@@ -19,6 +19,7 @@ import reportWebVitals from './reportWebVitals';
 
 import './index.css'
 import theme from './theme';
+import Profile from './routes/profile/profile';
 
 /* Chakra ui theming */
 
@@ -30,8 +31,9 @@ render(
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<App />}>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/" element={<Feed />} />
                     <Route path="/Feed" element={<Feed />} />
+                    <Route path="/:profileName" element={<Profile />} />
                     <Route path="/Settings" element={<Settings />} />
                     <Route path="/Team" element={<Team />} />
 

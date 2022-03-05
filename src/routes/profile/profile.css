@@ -1,0 +1,44 @@
+.profile-banner {
+    background:  url('../../assets/dark-city-4k.jpg') no-repeat center center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: auto;
+    height: 250px;
+    width: 100vw;
+    flex-direction: column;
+}
+
+.profile-name {
+    position: relative;
+    left: 15px;
+    line-height: 96px;
+}
+
+.profile-stats {
+    padding: 5px;
+}
+
+.profile-externals {
+    padding: 5px;
+}
+
+.profile-ext-stack {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.social-btn:hover {
+    cursor: pointer;
+    transform: scale(1.25);
+    color: #009e96;
+    transition: all 0.3s ease-in-out;
+}
+
+.bio {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid darkgrey;
+    border-radius: 6px;
+    padding: 20px;
+}
