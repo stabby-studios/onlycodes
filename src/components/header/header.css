@@ -1,0 +1,17 @@
+.header-hero {
+    height:750px;
+    background-image:linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url('../../assets/dark-city-4k.jpg');
+    display: flex;
+    align-self: center;
+    background-size: cover;
+    background-attachment: fixed;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-hero span {
+    text-transform: uppercase;
+    font-size: 2em;
+    color: #fff;
+    letter-spacing: 2px;
+}
