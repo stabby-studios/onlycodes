@@ -3,19 +3,6 @@
     top: 10px;
 }
 
-.author {
-    display: block;
-}
 
-.content {
-    display: block;
-    border: 1px solid darkgrey;
-    border-radius: 6px;
-    padding: 10px;
-}
 
-.post {
-    display: block;
-    border: 1px solid darkgrey;
-    border-radius: 6px;
-}
+

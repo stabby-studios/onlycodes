@@ -1,0 +1,42 @@
+.post {
+    display: block;
+    border: 1px solid darkgrey;
+    border-radius: 6px;
+    max-width: 500px;
+    width: 500px;
+}
+
+.post-data {
+    padding: 5px;
+    margin: 5px;
+}
+
+.small {
+    font-size: 10px;
+}
+
+.user {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.author {
+    display: inline-block;
+    line-height: 48px;
+    position: relative;
+    left: 10px;
+}
+
+.content {
+    display: block;
+    border: 1px solid darkgrey;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.post-stats {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 15px 0 15px 0;
+}
