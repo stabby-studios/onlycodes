@@ -7,10 +7,7 @@ export default function App() {
     return (
         <div>
             <Navbar />
-
-            <div style={{position: 'relative', top: '75px'}}>
-                <Outlet />
-            </div>
+            <Outlet />
         </div>
     );
 }

@@ -16,6 +16,9 @@ import {
     Stack,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { useEffect, useState } from 'react';
+
+import './navbar.css'
 
 const Links = ['Feed', 'Settings', 'Team'];
 
@@ -35,10 +38,22 @@ const NavLink = ({ children }) => (
 
 export default function Navbar() {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [stickyClass, setStickyClass] = useState('relative');
+
+    useEffect(() => {
+        window.addEventListener('scroll', stickNavbar)
+    });
+
+    const stickNavbar = () => {
+        if (window !== undefined) {
+            let windowHeight = window.scrollY;
+            windowHeight > 80 ? setStickyClass('sticky') : setStickyClass('relative');
+        }
+    }
 
     return (
         <>
-            <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} position="fixed" width="100%" zIndex="9999">
+            <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} className={stickyClass}>
                 <Flex h={20} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}

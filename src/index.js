@@ -8,7 +8,10 @@ import App from './App';
 import Home from './routes/home';
 import Feed from './routes/feed/feed';
 import Settings from './routes/settings';
-import Team from './routes/team'
+import Team from './routes/team';
+import Profile from './routes/profile/profile';
+import Login from './routes/auth/login';
+import Register from './routes/auth/register';
 
 /* Chakra ui */
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
@@ -19,7 +22,7 @@ import reportWebVitals from './reportWebVitals';
 
 import './index.css'
 import theme from './theme';
-import Profile from './routes/profile/profile';
+
 
 /* Chakra ui theming */
 
@@ -36,6 +39,8 @@ render(
                     <Route path="/:profileName" element={<Profile />} />
                     <Route path="/Settings" element={<Settings />} />
                     <Route path="/Team" element={<Team />} />
+                    <Route path="/Login" element={<Login />} />
+                    <Route path="/Register" element={<Register />} />
 
                     {/* No match Route should always be at the bottom. */}
                     <Route path="*" element={<div>404 Page Not Found</div>} />
