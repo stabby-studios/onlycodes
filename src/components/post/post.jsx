@@ -61,7 +61,7 @@ const Post = ({ post }) => {
                 </Text>
             </Box>
             <Box className='post-footer'>
-                <span className="small">{post.createdAt.toDateString()}</span>
+                <span className="small">{post.createdAt.toLocaleString()}</span>
             </Box>
         </Box>
     );
