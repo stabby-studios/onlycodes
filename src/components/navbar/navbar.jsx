@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
-
+import useAuth from '../../context/useAuth';
 import './navbar.css'
 
 const Links = ['Feed', 'Settings', 'Team'];
@@ -39,6 +39,7 @@ const NavLink = ({ children }) => (
 export default function Navbar() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [stickyClass, setStickyClass] = useState('relative');
+    const {onLogout} = useAuth();
 
     useEffect(() => {
         window.addEventListener('scroll', stickNavbar)
@@ -51,9 +52,13 @@ export default function Navbar() {
         }
     }
 
+    const handleLogout = () => {
+        onLogout();
+    }
+
     return (
         <>
-            <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} className={stickyClass}>
+            <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} className="sticky">
                 <Flex h={20} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}
@@ -118,6 +123,16 @@ export default function Navbar() {
                                             textDecoration: 'none',
                                         }}>
                                         Preferences
+                                    </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleLogout}>
+                                    <Link  px={2}
+                                        py={1}
+                                        rounded={'md'}
+                                        _hover={{
+                                            textDecoration: 'none',
+                                        }}>
+                                        Logout
                                     </Link>
                                 </MenuItem>
                             </MenuList>

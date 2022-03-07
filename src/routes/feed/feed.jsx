@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Center, Stack } from '@chakra-ui/react'
+import { Box, Center, Stack, Flex, useColorModeValue } from '@chakra-ui/react'
 import { Link } from 'react-router-dom';
 import NewPost from '../../components/new-post/new-post';
 
@@ -76,7 +76,11 @@ const feedItems = [
 
 const Feed = () => {
     return (
-        <Center>
+       <Flex
+            align={'center'}
+            justify={'center'}
+            bg={useColorModeValue('gray.50', 'gray.800')}>
+            <Center>
             <Stack>
                 <NewPost />
                 <Stack className='feed'>
@@ -88,6 +92,7 @@ const Feed = () => {
                 </Stack>
             </Stack>
         </Center>
+       </Flex>
     )
 }
 

@@ -12,11 +12,20 @@ import {
     Text,
     useColorModeValue,
 } from '@chakra-ui/react';
+import { Navigate } from 'react-router-dom';
+import useAuth from '../../../context/useAuth';
 
 const LoginForm = () => {
+
+    const {onLogin} = useAuth();
+
+    const handleClick = () => {
+        onLogin();
+        <Navigate to={'/feed'} />
+    }
+
     return (
         <Flex
-            minH={'100vh'}
             align={'center'}
             justify={'center'}
             bg={useColorModeValue('gray.50', 'gray.800')}>
@@ -54,7 +63,8 @@ const LoginForm = () => {
                                 color={'white'}
                                 _hover={{
                                     bg: 'blue.500',
-                                }}>
+                                }}
+                                onClick={handleClick}>
                                 Sign in
                             </Button>
                         </Stack>

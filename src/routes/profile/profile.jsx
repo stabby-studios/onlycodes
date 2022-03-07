@@ -1,14 +1,17 @@
 import React from 'react';
 import { Box, Stack, HStack, VStack, Textarea, Text, Button, ButtonGroup, Center, Avatar } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import './profile.css';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { faFacebook, faGithub, faInstagram, faStackExchange, faStackOverflow, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 const Profile = () => {
 
     let params = useParams();
+
+    if (localStorage.getItem('token') == null) {
+        return <Navigate to={'/login'} />
+    }
 
     return (
         <Center>

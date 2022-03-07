@@ -1,3 +1,4 @@
+import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -22,32 +23,36 @@ import reportWebVitals from './reportWebVitals';
 
 import './index.css'
 import theme from './theme';
+import AuthProvider from './context/auth.provider';
 
 
 /* Chakra ui theming */
 
 
 const root = document.getElementById('root');
-render(
-    <ChakraProvider theme={theme}>
-        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<App />}>
-                    <Route path="/" element={<Feed />} />
-                    <Route path="/Feed" element={<Feed />} />
-                    <Route path="/:profileName" element={<Profile />} />
-                    <Route path="/Settings" element={<Settings />} />
-                    <Route path="/Team" element={<Team />} />
-                    <Route path="/Login" element={<Login />} />
-                    <Route path="/Register" element={<Register />} />
 
-                    {/* No match Route should always be at the bottom. */}
-                    <Route path="*" element={<div>404 Page Not Found</div>} />
-                </Route>
-            </Routes>
-        </BrowserRouter>
-    </ChakraProvider>,
+render(
+        <AuthProvider>
+            <ChakraProvider theme={theme}>
+            <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+            <BrowserRouter>
+                <Routes>
+                    <Route exact path="/" element={<App />}>
+                        <Route path="/" element={<Feed />} />
+                        <Route path="/Feed" element={<Feed />} />
+                        <Route path="/:profileName" element={<Profile />} />
+                        <Route path="/Settings" element={<Settings />} />
+                        <Route path="/Team" element={<Team />} />
+                        <Route path="/Login" element={<Login />} />
+                        <Route path="/Register" element={<Register />} />
+
+                        {/* No match Route should always be at the bottom. */}
+                        <Route path="*" element={<div>404 Page Not Found</div>} />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </ChakraProvider>
+        </AuthProvider>,
     root
 );
 
