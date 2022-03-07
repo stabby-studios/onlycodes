@@ -26,7 +26,7 @@ const feedItems = [
             username: 'techlead1337',
             avatar: 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
         },
-        content: 'Hello World!',
+        content: 'Hello World! this is some extra content thats alot of stuff',
         image: 'https://via.placeholder.com/150',
         replyIds: Array( Math.floor(Math.random() * 45) ).fill().map(() => Math.round(Math.random() * 40)),
         likedBy: Array( Math.floor(Math.random() * 45) ).fill().map(() => Math.round(Math.random() * 40)),

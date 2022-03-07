@@ -24,6 +24,7 @@
     line-height: 48px;
     position: relative;
     left: 10px;
+    text-decoration: none;
 }
 
 .content {
