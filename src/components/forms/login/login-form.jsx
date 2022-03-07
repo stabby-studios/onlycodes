@@ -13,15 +13,12 @@ import {
     useColorModeValue,
 } from '@chakra-ui/react';
 import { Navigate } from 'react-router-dom';
-import useAuth from '../../../context/useAuth';
+
 
 const LoginForm = () => {
 
-    const {onLogin} = useAuth();
-
     const handleClick = () => {
-        onLogin();
-        <Navigate to={'/feed'} />
+        console.log('clicked');
     }
 
     return (

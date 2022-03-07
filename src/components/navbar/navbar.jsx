@@ -17,8 +17,8 @@ import {
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
-import useAuth from '../../context/useAuth';
 import './navbar.css'
+import { removeTokenFromLocalStorage } from '../../util/token';
 
 const Links = ['Feed', 'Settings', 'Team'];
 
@@ -39,7 +39,6 @@ const NavLink = ({ children }) => (
 export default function Navbar() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [stickyClass, setStickyClass] = useState('relative');
-    const {onLogout} = useAuth();
 
     useEffect(() => {
         window.addEventListener('scroll', stickNavbar)
@@ -53,7 +52,7 @@ export default function Navbar() {
     }
 
     const handleLogout = () => {
-        onLogout();
+        removeTokenFromLocalStorage();
     }
 
     return (

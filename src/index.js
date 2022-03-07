@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 /* main Element */
 import App from './App';
@@ -23,36 +23,59 @@ import reportWebVitals from './reportWebVitals';
 
 import './index.css'
 import theme from './theme';
-import AuthProvider from './context/auth.provider';
 
 
 /* Chakra ui theming */
 
+function PrivateRoute({ children }) {
+    const auth = useAuth();
+    return auth ? children : <Navigate to="/Login" />
+}
+
+function useAuth() {
+    return true;
+}
 
 const root = document.getElementById('root');
 
 render(
-        <AuthProvider>
-            <ChakraProvider theme={theme}>
-            <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-            <BrowserRouter>
-                <Routes>
-                    <Route exact path="/" element={<App />}>
-                        <Route path="/" element={<Feed />} />
-                        <Route path="/Feed" element={<Feed />} />
-                        <Route path="/:profileName" element={<Profile />} />
-                        <Route path="/Settings" element={<Settings />} />
-                        <Route path="/Team" element={<Team />} />
-                        <Route path="/Login" element={<Login />} />
-                        <Route path="/Register" element={<Register />} />
+    <ChakraProvider theme={theme}>
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+        <BrowserRouter>
+            <Routes>
+                <Route exact path="/" element={<App />}>
+                    <Route path="/" element={
+                        <Home />
+                    } />
+                    <Route path="/Feed" element={
+                        <PrivateRoute>
+                            <Feed />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/:profileName" element={
+                        <PrivateRoute>
+                            <Profile />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/Settings" element={
+                        <PrivateRoute>
+                            <Settings />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/Team" element={
+                        <PrivateRoute>
+                            <Team />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/Login" element={<Login />} />
+                    <Route path="/Register" element={<Register />} />
 
-                        {/* No match Route should always be at the bottom. */}
-                        <Route path="*" element={<div>404 Page Not Found</div>} />
-                    </Route>
-                </Routes>
-            </BrowserRouter>
-        </ChakraProvider>
-        </AuthProvider>,
+                    {/* No match Route should always be at the bottom. */}
+                    <Route path="*" element={<div>404 Page Not Found</div>} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    </ChakraProvider>,
     root
 );
 

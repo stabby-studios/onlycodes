@@ -9,9 +9,9 @@ const Profile = () => {
 
     let params = useParams();
 
-    if (localStorage.getItem('token') == null) {
-        return <Navigate to={'/login'} />
-    }
+    // if (localStorage.getItem('token') == null) {
+    //     return <Navigate to={'/login'} />
+    // }
 
     return (
         <Center>
