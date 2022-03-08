@@ -17,7 +17,9 @@ import {
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import './navbar.css'
-import { removeTokenFromLocalStorage } from '../../util/token';
+
+import {getAuth, signOut} from 'firebase/auth';
+import {app} from '../../firebase'
 
 const Links = ['Feed', 'Settings', 'Team'];
 
@@ -35,11 +37,19 @@ const NavLink = ({ children }) => (
     </Link>
 );
 
+const auth = getAuth(app);
+
 export default function Navbar() {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleLogout = () => {
-        removeTokenFromLocalStorage();
+        console.log(auth)
+        signOut(auth).then(() => {
+            // signout successful!
+            console.log('signed out')
+        }).catch((error) => {
+            console.log(error)
+        })
     }
 
     return (

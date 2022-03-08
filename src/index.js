@@ -24,7 +24,6 @@ import reportWebVitals from './reportWebVitals';
 import './index.css'
 import theme from './theme';
 
-
 /* Chakra ui theming */
 
 function PrivateRoute({ children }) {
