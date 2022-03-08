@@ -38,18 +38,6 @@ const NavLink = ({ children }) => (
 
 export default function Navbar() {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [stickyClass, setStickyClass] = useState('relative');
-
-    useEffect(() => {
-        window.addEventListener('scroll', stickNavbar)
-    });
-
-    const stickNavbar = () => {
-        if (window !== undefined) {
-            let windowHeight = window.scrollY;
-            windowHeight > 80 ? setStickyClass('sticky') : setStickyClass('relative');
-        }
-    }
 
     const handleLogout = () => {
         removeTokenFromLocalStorage();
