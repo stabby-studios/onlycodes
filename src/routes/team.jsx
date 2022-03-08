@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { db, auth } from '../firebase'
@@ -12,7 +12,7 @@ const Team = () => {
 
     const navigate = useNavigate();
 
-    const fetchUsers = async () => {
+    const fetchUsers = useCallback( async () => {
         try {
             const querySnapshot = await getDocs(collection(db, "users"), )
             const data = []
@@ -26,7 +26,7 @@ const Team = () => {
             console.error(error)
             alert(e)
         }
-    }
+    }, [error]);
 
     useEffect(() => {
         if (loading) return
@@ -35,12 +35,9 @@ const Team = () => {
             console.log('no user??')
             return navigate("/login")
         }
-
-        console.log(usersList)
-
         fetchUsers();
 
-    }, [])
+    }, [fetchUsers, loading, navigate, user])
 
     return (
         <div>
