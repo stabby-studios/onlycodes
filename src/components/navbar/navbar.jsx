@@ -1,3 +1,4 @@
+import React from 'react'
 import {
     Box,
     Flex,
@@ -18,8 +19,8 @@ import {
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import './navbar.css'
 
-import {getAuth, signOut} from 'firebase/auth';
-import {app} from '../../firebase'
+import { getAuth, signOut } from 'firebase/auth';
+import { app } from '../../firebase';
 
 const Links = ['Feed', 'Settings', 'Team'];
 
@@ -39,7 +40,7 @@ const NavLink = ({ children }) => (
 
 const auth = getAuth(app);
 
-export default function Navbar() {
+export default function Navbar(props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleLogout = () => {
@@ -50,6 +51,73 @@ export default function Navbar() {
         }).catch((error) => {
             console.log(error)
         })
+    }
+
+    const UserMenu = (props) => {
+        return (
+            <>
+                <Flex alignItems={'center'}>
+                    <Menu>
+                        <MenuButton
+                            as={Button}
+                            rounded={'full'}
+                            variant={'link'}
+                            cursor={'pointer'}
+                            minW={0}>
+                            <Avatar
+                                size={'lg'}
+                                src={
+                                    props.user?.photoURL
+                                }
+                            />
+                        </MenuButton>
+                        <MenuList>
+                            <MenuItem>
+                                <Link href='/someusername' px={2}
+                                    py={1}
+                                    rounded={'md'}
+                                    _hover={{
+                                        textDecoration: 'none',
+                                    }}>
+                                    {props.user?.displayName}
+                                </Link>
+                            </MenuItem>
+                            <MenuItem>
+                                <Link href='/faq' px={2}
+                                    py={1}
+                                    rounded={'md'}
+                                    _hover={{
+                                        textDecoration: 'none',
+                                    }}>
+                                    FAQ
+                                </Link>
+                            </MenuItem>
+                            <MenuDivider />
+                            <MenuItem>
+                                <Link href='/preferences' px={2}
+                                    py={1}
+                                    rounded={'md'}
+                                    _hover={{
+                                        textDecoration: 'none',
+                                    }}>
+                                    Preferences
+                                </Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleLogout}>
+                                <Link px={2}
+                                    py={1}
+                                    rounded={'md'}
+                                    _hover={{
+                                        textDecoration: 'none',
+                                    }}>
+                                    Logout
+                                </Link>
+                            </MenuItem>
+                        </MenuList>
+                    </Menu>
+                </Flex>
+            </>
+        )
     }
 
     return (
@@ -74,66 +142,7 @@ export default function Navbar() {
                             ))}
                         </HStack>
                     </HStack>
-                    <Flex alignItems={'center'}>
-                        <Menu>
-                            <MenuButton
-                                as={Button}
-                                rounded={'full'}
-                                variant={'link'}
-                                cursor={'pointer'}
-                                minW={0}>
-                                <Avatar
-                                    size={'lg'}
-                                    src={
-                                        'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                                    }
-                                />
-                            </MenuButton>
-                            <MenuList>
-                                <MenuItem>
-                                    <Link href='/someusername' px={2}
-                                        py={1}
-                                        rounded={'md'}
-                                        _hover={{
-                                            textDecoration: 'none',
-                                        }}>
-                                        Profile
-                                    </Link>
-                                </MenuItem>
-                                <MenuItem>
-                                    <Link href='/faq' px={2}
-                                        py={1}
-                                        rounded={'md'}
-                                        _hover={{
-                                            textDecoration: 'none',
-                                        }}>
-                                        FAQ
-                                    </Link>
-                                </MenuItem>
-                                <MenuDivider />
-                                <MenuItem>
-                                    <Link href='/preferences' px={2}
-                                        py={1}
-                                        rounded={'md'}
-                                        _hover={{
-                                            textDecoration: 'none',
-                                        }}>
-                                        Preferences
-                                    </Link>
-                                </MenuItem>
-                                <MenuItem onClick={handleLogout}>
-                                    <Link  px={2}
-                                        py={1}
-                                        rounded={'md'}
-                                        _hover={{
-                                            textDecoration: 'none',
-                                        }}>
-                                        Logout
-                                    </Link>
-                                </MenuItem>
-                            </MenuList>
-                        </Menu>
-                    </Flex>
+                    <UserMenu user={props.user} />
                 </Flex>
 
                 {isOpen ? (

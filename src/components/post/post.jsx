@@ -75,7 +75,7 @@ export default function Post({ post }) {
         <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
           <Avatar
             src={
-              "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+              post.user.avatar
             }
             alt={"Author"}
           />
@@ -83,7 +83,7 @@ export default function Post({ post }) {
             <Link href={"/" + post.user.username} className="author">
               <Text fontWeight={600}>@{post.user.username}</Text>
             </Link>
-            <Text color={"gray.500"}>{post.createdAt.toLocaleString()}</Text>
+            <Text color={"gray.500"}>{post.createdAt.toDate().toLocaleString()}</Text>
           </Stack>
         </Stack>
         <PostActions />
