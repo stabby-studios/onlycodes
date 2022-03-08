@@ -16,7 +16,6 @@ import {
     Stack,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import { useEffect, useState } from 'react';
 import './navbar.css'
 import { removeTokenFromLocalStorage } from '../../util/token';
 
