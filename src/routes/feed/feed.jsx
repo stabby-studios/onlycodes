@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box, Center, Stack, Flex, useColorModeValue } from '@chakra-ui/react'
-import { Link } from 'react-router-dom';
+import { Center, Stack, Flex, useColorModeValue } from '@chakra-ui/react'
 import NewPost from '../../components/new-post/new-post';
 
 import './feed.css'

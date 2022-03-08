@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Link, Outlet, Navigate } from 'react-router-dom'
+import { Outlet, Navigate } from 'react-router-dom'
 import Navbar from './components/navbar/navbar'
 import { validateToken } from './util/token';
 import { createDummyToken } from './util/token';

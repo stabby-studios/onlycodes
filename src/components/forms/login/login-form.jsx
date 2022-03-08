@@ -12,7 +12,6 @@ import {
     Text,
     useColorModeValue,
 } from '@chakra-ui/react';
-import { Navigate } from 'react-router-dom';
 
 
 const LoginForm = () => {

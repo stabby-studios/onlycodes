@@ -1,8 +1,8 @@
 import React from 'react';
-import { Box, Stack, HStack, VStack, Textarea, Text, Button, ButtonGroup, Center, Avatar } from '@chakra-ui/react';
+import { Box, Stack, HStack, VStack, Text, Center, Avatar } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './profile.css';
-import { Navigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { faFacebook, faGithub, faInstagram, faStackExchange, faStackOverflow, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 const Profile = () => {
