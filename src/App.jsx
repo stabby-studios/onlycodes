@@ -1,16 +1,30 @@
-import React from 'react';
-import { Outlet, Navigate } from 'react-router-dom'
+import React, { useEffect } from 'react';
+import { Outlet,  useNavigate } from 'react-router-dom'
 import Navbar from './components/navbar/navbar'
-
+import { auth} from './firebase'
+import { useAuthState } from 'react-firebase-hooks/auth';
 import './App.css';
 
 export default function App() {
-    const user = {}
+
+    const [user, loading] = useAuthState(auth);
+    const nav = useNavigate()
+
+    useEffect(() => {
+
+        if (loading) return;
+
+        if (!user) {
+            return <>{nav('/login')}</>
+        }
+    })
+
+
     return (
         <div>
-            <Navbar />
+            <Navbar user={user} />
             <div style={{ position: 'relative', top: '75px' }}>
-                {user ? <Outlet /> : <Navigate to={'/login'} />}
+                <Outlet />
             </div>
         </div>
     );

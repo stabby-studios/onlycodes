@@ -1,17 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Box, Stack, HStack, VStack, Text, Center, Avatar } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './profile.css';
 import { useParams } from 'react-router-dom';
 import { faFacebook, faGithub, faInstagram, faStackExchange, faStackOverflow, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import {auth} from '../../firebase'
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
 
     let params = useParams();
+    const [user] = useAuthState(auth);
+    const navigate = useNavigate();
 
-    // if (localStorage.getItem('token') == null) {
-    //     return <Navigate to={'/login'} />
-    // }
+    useEffect(() => {
+        if (!user) {
+            return navigate('/login')
+        }
+    })
 
     return (
         <Center>

@@ -44,11 +44,10 @@ const Team = () => {
             <h3>Team</h3>
 
             <ul>
-                {
-                    usersList.map((user) => {
-                        return <li key={user}>{user.uid} - {user.email}</li>
-                    })
-                }
+                {usersList.map((item) => {
+                    console.log(item)
+                    return <li key={item.uid}>{item.uid} - {item.name} - {item.email}</li>
+                })}
             </ul>
         </div>
     )
