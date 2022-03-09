@@ -17,7 +17,7 @@ export default function App() {
         if (!user) {
             return <>{nav('/login')}</>
         }
-    })
+    }, [user, loading, nav])
 
 
     return (
