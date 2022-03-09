@@ -47,9 +47,9 @@ const NewPost = () => {
             },
             content: postContent,
             image: null,
-            replyIds: Array(Math.floor(Math.random() * 45)).fill().map(() => Math.round(Math.random() * 40)),
-            likedBy: Array(Math.floor(Math.random() * 45)).fill().map(() => Math.round(Math.random() * 40)),
-            forkedBy: Array(Math.floor(Math.random() * 45)).fill().map(() => Math.round(Math.random() * 40)),
+            replies: [],
+            likes: [],
+            forks: [],
             createdAt: new Date()
         });
 

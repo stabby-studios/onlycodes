@@ -56,7 +56,7 @@ const Feed = () => {
                         {snapshot.docs.map(post => {
                             const data = post.data();
                             return (
-                                <Post post={data} key={post.id} />
+                                <Post post={data} postId={post.id} key={post.id} />
                             )
                         })}
                     </Stack>

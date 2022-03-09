@@ -18,7 +18,6 @@ const signInGithub = async () => {
                 email: user.email
             });
         }
-
     } catch (e) {
         console.error(e);
         alert(e);

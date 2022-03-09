@@ -4,11 +4,16 @@ import {signInGithub} from '../../components/github-sign-in';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Box, Button, Center, Stack, Text } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
-    const handleClick = () => {
-        signInGithub()
+    const navigate = useNavigate();
+
+    const handleClick = async () => {
+        await signInGithub()
+
+        navigate("/Feed")
     }
 
     return (
