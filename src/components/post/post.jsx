@@ -35,13 +35,15 @@ const PostActions = ({postId, userId}) => {
         subscribe: true
     });
 
+
+
     const likeMutation = useFirestoreTransaction(fref, async (tsx) => {
         // Get the document
         const doc = await tsx.get(ref);
 
-        var likesOnPost = doc.data().likes.uid;
-        
-        if (likesOnPost.includes(userId.toString())) {
+        var likesOnPost = doc.data().likes;
+
+        if (likesOnPost?.includes(userId.toString())) {
 
             var likeIndexOnPost = likesOnPost.indexOf(userId);
             if (likeIndexOnPost !== -1) {
@@ -54,7 +56,7 @@ const PostActions = ({postId, userId}) => {
                 }
             })
         } else {
-            likesOnPost.push(userId.toString())
+            likesOnPost?.push(userId.toString())
             tsx.update(ref, {
                 likes: {
                     uid: likesOnPost
@@ -68,7 +70,7 @@ const PostActions = ({postId, userId}) => {
         return <>Loading post...</>
     }
     const postSnapshot = postFromDoc.data;
-    
+
     const handleClickAddLike = (event) => {
         event.preventDefault()
         console.log('clicked like')
@@ -107,8 +109,6 @@ const PostActions = ({postId, userId}) => {
 };
 
 export default function Post({ post, postId }) {
-
-   
     return (
         <Center py={6}>
             <Box
