@@ -73,7 +73,7 @@ export default function Navbar(props) {
                         </MenuButton>
                         <MenuList>
                             <MenuItem>
-                                <Link href='/someusername' px={2}
+                                <Link href={props.user?.displayName} px={2}
                                     py={1}
                                     rounded={'md'}
                                     _hover={{

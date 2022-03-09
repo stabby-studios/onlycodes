@@ -11,14 +11,17 @@ import { useNavigate } from 'react-router-dom';
 const Profile = () => {
 
     let params = useParams();
-    const [user] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();
 
     useEffect(() => {
+
+        if(loading) return;
+
         if (!user) {
-            return navigate('/login')
+            return <>{navigate('/login')}</>
         }
-    })
+    }, [user, navigate, loading])
 
     return (
         <Center>
