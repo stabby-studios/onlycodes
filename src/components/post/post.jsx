@@ -41,9 +41,9 @@ const PostActions = ({postId, userId}) => {
         // Get the document
         const doc = await tsx.get(ref);
 
-        var likesOnPost = doc.data().likes;
+        var likesOnPost = doc.data().likes.uid;
 
-        if (likesOnPost?.includes(userId.toString())) {
+        if (likesOnPost.includes(userId.toString())) {
 
             var likeIndexOnPost = likesOnPost.indexOf(userId);
             if (likeIndexOnPost !== -1) {
