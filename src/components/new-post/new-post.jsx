@@ -48,7 +48,9 @@ const NewPost = () => {
             content: postContent,
             image: null,
             replies: [],
-            likes: [],
+            likes: {
+                uid: []
+            },
             forks: [],
             createdAt: new Date()
         });
