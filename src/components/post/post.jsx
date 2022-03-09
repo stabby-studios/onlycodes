@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Box,
     Center,
@@ -20,11 +20,12 @@ import {
     faHeart as faHeartRegular
 } from "@fortawesome/free-regular-svg-icons"
 import "./post.css";
-import {db} from "../../firebase";
-import {collection, doc} from 'firebase/firestore'
+import { db, auth } from "../../firebase";
+import { collection, doc } from 'firebase/firestore'
 import { useFirestoreDocument, useFirestoreTransaction } from "@react-query-firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-const PostActions = ({postId, userId}) => {
+const PostActions = ({ postId, userId }) => {
 
     const col = collection(db, "posts");
     const ref = doc(col, postId.toString());
@@ -35,34 +36,48 @@ const PostActions = ({postId, userId}) => {
         subscribe: true
     });
 
-
-
     const likeMutation = useFirestoreTransaction(fref, async (tsx) => {
         // Get the document
         const doc = await tsx.get(ref);
 
-        var likesOnPost = doc.data().likes;
+        var likesOnPost = doc.data().likes.uid;
 
-        if (likesOnPost?.includes(userId.toString())) {
-
-            var likeIndexOnPost = likesOnPost.indexOf(userId);
-            if (likeIndexOnPost !== -1) {
-                likesOnPost.splice(likeIndexOnPost, 1);
-            }
-    
+        if (likesOnPost.length === 0) {
+            console.log('no likes')
+            likesOnPost.push(userId.toString());
             tsx.update(ref, {
                 likes: {
                     uid: likesOnPost
                 }
-            })
-        } else {
-            likesOnPost?.push(userId.toString())
-            tsx.update(ref, {
-                likes: {
-                    uid: likesOnPost
-                }
-            })
+            });
+
+            return likesOnPost;
         }
+
+        if (likesOnPost.includes(userId.toString())) {
+            let index = likesOnPost.indexOf(userId.toString());
+
+            if (index !== -1) {
+                likesOnPost.splice(index, 1);
+            }
+            
+            tsx.update(ref, {
+                likes: {
+                    uid: likesOnPost
+                }
+            });
+
+            return likesOnPost
+        }
+
+        likesOnPost.push(userId.toString())
+
+        tsx.update(ref, {
+            likes: {
+                uid: likesOnPost
+            }
+        })
+
         return likesOnPost;
     });
 
@@ -109,6 +124,21 @@ const PostActions = ({postId, userId}) => {
 };
 
 export default function Post({ post, postId }) {
+
+    const [user, loading] = useAuthState(auth);
+
+    useEffect(() => {
+
+        if (loading) {
+            return;
+        }
+
+        if (!user) {
+            return
+        }
+
+    }, [user, loading])
+
     return (
         <Center py={6}>
             <Box
@@ -154,7 +184,7 @@ export default function Post({ post, postId }) {
                         <Text color={"gray.500"}>{post.createdAt.toDate().toLocaleString()}</Text>
                     </Stack>
                 </Stack>
-                <PostActions postId={postId} userId={post.user.uid}/>
+                <PostActions postId={postId} userId={user.uid} />
             </Box>
         </Center>
     );
