@@ -55,18 +55,12 @@ const PostActions = ({ postId, userId }) => {
         }
 
         if (likesOnPost.includes(userId.toString())) {
-
-            console.log('contains userid in likes, so remove it')
-
             let index = likesOnPost.indexOf(userId.toString());
-            console.log('before splice: ', likesOnPost)
 
             if (index !== -1) {
                 likesOnPost.splice(index, 1);
             }
-
-            console.log('after splice', likesOnPost)
-
+            
             tsx.update(ref, {
                 likes: {
                     uid: likesOnPost

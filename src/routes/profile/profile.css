@@ -15,8 +15,15 @@
     line-height: 96px;
 }
 
+.profile-data-text {
+    position: relative;
+    left: 15px;
+}
+
 .profile-stats {
+    display: flex;
     padding: 5px;
+    align-self: center;
 }
 
 .profile-externals {
