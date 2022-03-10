@@ -2,16 +2,12 @@ import React, { useRef, useState } from 'react';
 import { Box, Stack, Textarea, Text, Button, ButtonGroup } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCodeMerge, faFileArrowUp } from '@fortawesome/free-solid-svg-icons';
-
 import './new-post.css'
 import { collection } from 'firebase/firestore';
-import { db, auth } from '../../firebase';
+import { db } from '../../firebase';
 import { useFirestoreCollectionMutation } from '@react-query-firebase/firestore';
-import { useAuthState } from 'react-firebase-hooks/auth';
 
-const NewPost = () => {
-    const [user] = useAuthState(auth);
-
+const NewPost = ({loggedInUser}) => {
     const dbRef = collection(db, "posts");
     const mutation = useFirestoreCollectionMutation(dbRef);
 
@@ -41,9 +37,9 @@ const NewPost = () => {
 
         mutation.mutate({
             user: {
-                uid: user.uid,
-                username: user.displayName,
-                avatar: user.photoURL ?? 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                uid: loggedInUser.uid,
+                username: loggedInUser.name,
+                avatar: loggedInUser.avatar ?? 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
             },
             content: postContent,
             image: null,

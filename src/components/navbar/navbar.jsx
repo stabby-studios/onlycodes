@@ -33,18 +33,17 @@ const NavLink = ({ children }) => (
             textDecoration: 'none',
             bg: useColorModeValue('gray.200', 'gray.700'),
         }}
-        href={children}>
+        href={"/" + children}>
         {children}
     </Link>
 );
 
 const auth = getAuth(app);
 
-export default function Navbar(props) {
+export default function Navbar({user}) {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleLogout = () => {
-        console.log(auth)
         signOut(auth).then(() => {
             // signout successful!
             console.log('signed out')
@@ -53,7 +52,7 @@ export default function Navbar(props) {
         })
     }
 
-    const UserMenu = (props) => {
+    const UserMenu = ({user}) => {
         return (
             <>
                 <Flex alignItems={'center'}>
@@ -67,19 +66,19 @@ export default function Navbar(props) {
                             <Avatar
                                 size={'lg'}
                                 src={
-                                    props.user?.photoURL
+                                    user.avatar ? user.avatar : null
                                 }
                             />
                         </MenuButton>
                         <MenuList>
                             <MenuItem>
-                                <Link href={props.user?.displayName} px={2}
+                                <Link href={"/Self/" + user.uid} px={2}
                                     py={1}
                                     rounded={'md'}
                                     _hover={{
                                         textDecoration: 'none',
                                     }}>
-                                    {props.user?.displayName}
+                                    {user.name}
                                 </Link>
                             </MenuItem>
                             <MenuItem>
@@ -142,7 +141,7 @@ export default function Navbar(props) {
                             ))}
                         </HStack>
                     </HStack>
-                    <UserMenu user={props.user} />
+                    <UserMenu user={user} />
                 </Flex>
 
                 {isOpen ? (

@@ -1,32 +1,57 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Center, Stack, Flex, Spinner } from '@chakra-ui/react'
 import NewPost from '../../components/new-post/new-post';
 import './feed.css'
 import Post from '../../components/post/post';
 import { db, auth } from '../../firebase'
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { collection, orderBy, query } from 'firebase/firestore';
+import { collection, orderBy, query, getDocs } from 'firebase/firestore';
 import {  useFirestoreQuery } from '@react-query-firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 const Feed = () => {
 
-    const [user, loading] = useAuthState(auth);
+    const [user, loading, error] = useAuthState(auth);
     const navigate = useNavigate();
+
+    const [authedUser, setAuthedUser] = useState({});
 
     const queryRef = query(collection(db, "posts"), orderBy("createdAt", "desc"));
     const firestoreQuery = useFirestoreQuery(["posts"], queryRef, {
         subscribe: true
     });
 
-    useEffect(() => {
-        if  (loading) return
+    const fetchUser = useCallback(async () => {
+        try {
+            const userSnapshot = await getDocs(collection(db, "users"));
+            const data = []
 
-        
+            userSnapshot.forEach((doc) => {
+                data.push(doc.data())
+            })
+
+            if (!user) {
+                return;
+            } else {
+                const u = data.find(foundUser => foundUser['uid'] === user.uid)
+                setAuthedUser(u)
+            }
+        } catch (e) {
+            console.error(error)
+            alert(e)
+        }
+    }, [error, user])
+
+    useEffect(() => {
+        if  (loading) return        
         if (!user) {
             return navigate('/login')
         }
-    });
+
+        fetchUser()
+
+    }, [fetchUser, user, loading, navigate]);
+
 
     if (firestoreQuery.isLoading) {
         return (
@@ -43,7 +68,6 @@ const Feed = () => {
     }
 
     const snapshot = firestoreQuery.data;
-
     return (
         <Flex
             align={'center'}
@@ -51,7 +75,7 @@ const Feed = () => {
             bg={'gray.800'}>
             <Center>
                 <Stack>
-                    <NewPost />
+                    <NewPost loggedInUser={authedUser} />
                     <Stack className='feed'>
                         {snapshot.docs.map(post => {
                             const data = post.data();

@@ -178,7 +178,7 @@ export default function Post({ post, postId }) {
                         alt={"Author"}
                     />
                     <Stack direction={"column"} spacing={0} fontSize={"sm"}>
-                        <Link href={"/" + post.user.username} className="author">
+                        <Link href={"profile/" + post.user.uid} className="author">
                             <Text fontWeight={600}>@{post.user.username}</Text>
                         </Link>
                         <Text color={"gray.500"}>{post.createdAt.toDate().toLocaleString()}</Text>

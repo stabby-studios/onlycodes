@@ -26,6 +26,7 @@ import theme from './theme';
 
 /* React Query */
 import { QueryClient, QueryClientProvider } from 'react-query'
+import Someone from './routes/profile/someone';
 
 /* entry point */
 function PrivateRoute({ children }) {
@@ -55,11 +56,6 @@ render(
                                 <Feed />
                             </PrivateRoute>
                         } />
-                        <Route path="/:profileName" element={
-                            <PrivateRoute>
-                                <Profile />
-                            </PrivateRoute>
-                        } />
                         <Route path="/Settings" element={
                             <PrivateRoute>
                                 <Settings />
@@ -70,6 +66,22 @@ render(
                                 <Team />
                             </PrivateRoute>
                         } />
+                        <Route path="/">
+                            <Route path="/Profile">
+                                <Route path=":id" element={
+                                    <PrivateRoute>
+                                        <Someone />
+                                    </PrivateRoute>
+                                } />
+                            </Route>
+                            <Route path='/Self'>
+                                <Route path=":id" element={
+                                    <PrivateRoute>
+                                        <Profile />
+                                    </PrivateRoute>
+                                } />
+                            </Route>
+                        </Route>
                         <Route path="/Login" element={<Login />} />
                         <Route path="/Register" element={<Register />} />
 

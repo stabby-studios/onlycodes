@@ -1,14 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Outlet,  useNavigate } from 'react-router-dom'
 import Navbar from './components/navbar/navbar'
-import { auth} from './firebase'
+import { auth, db} from './firebase'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import './App.css';
+import { collection, getDocs } from 'firebase/firestore';
+
 
 export default function App() {
 
-    const [user, loading] = useAuthState(auth);
+    const [user, loading, error] = useAuthState(auth);
     const nav = useNavigate()
+    const [authedUser, setAuthedUser] = useState({});
+
+    const fetchUser = useCallback(async () => {
+        try {
+            const userSnapshot = await getDocs(collection(db, "users"));
+            const data = [];
+
+            userSnapshot.forEach((doc) => {
+                data.push(doc.data());
+            });
+
+            if (!user) {
+                return;
+            } else {
+                const u = data.find(foundUser => foundUser['uid'] === user.uid);
+                setAuthedUser(u);
+            }
+        } catch (e) {
+            console.error(error);
+            alert(e);
+        }
+    }, [error, user]);
 
     useEffect(() => {
 
@@ -17,12 +41,15 @@ export default function App() {
         if (!user) {
             return <>{nav('/login')}</>
         }
-    }, [user, loading, nav])
+
+        fetchUser()
+
+    }, [user, loading, nav, fetchUser])
 
 
     return (
         <div>
-            <Navbar user={user} />
+            <Navbar user={authedUser} />
             <div style={{ position: 'relative', top: '75px' }}>
                 <Outlet />
             </div>
