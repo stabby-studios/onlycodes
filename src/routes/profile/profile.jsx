@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Stack, HStack, VStack, Text, Center, Avatar, Button } from '@chakra-ui/react';
+import React, { useEffect } from 'react';
+import { Box, Stack, HStack, VStack, Text, Center, Avatar, Button, Spinner } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './profile.css';
 import { useParams } from 'react-router-dom';
@@ -16,6 +16,13 @@ const FollowUnfollowButton = ({following, userId, targetId}) => {
     const col = collection(db, "users");
     const ref = doc(col, targetId.toString())
     const fref = ref.firestore;
+
+    const userRef = query(col, limit(1), where("uid", "==", userId.toString()));
+    const q = useFirestoreQuery(["users"], userRef);
+    const snapshot = q.data
+
+    const uref = doc(col, snapshot.docs[0].id.toString())
+    const ufref = uref.firestore;
 
     const followMutation = useFirestoreTransaction(fref, async (tsx) => {
         const doc = await tsx.get(ref);
@@ -58,10 +65,53 @@ const FollowUnfollowButton = ({following, userId, targetId}) => {
         return followers;
     });
 
+    const updateFollowingMutation = useFirestoreTransaction(ufref, async (tsx) => {
+        const doc = await tsx.get(uref);
+
+        var following = doc.data().following.followedUsers;
+
+        if(following.length === 0) {
+            console.log('no followed users')
+            following.push(targetId.toString())
+            tsx.update(uref, {
+                following: {
+                    followedUsers: following
+                }
+            });
+            return following;
+        }
+
+        if (following.includes(userId.toString())) {
+            let i = following.indexOf(userId.toString())
+            if (i !== -1) {
+                following.splice(i, 1);
+            }
+
+            tsx.update(uref, {
+                following: {
+                    followedUsers: following
+                }
+            });
+            return following;
+        }
+
+            tsx.update(uref, {
+                following: {
+                    followedUsers: following
+                }
+            });
+        return following;
+    });
+
     const handleFollowClick = () => {
         console.log('clicked follow/unfollow button')
 
         followMutation.mutate();
+        updateFollowingMutation.mutate();
+    }
+
+    if (q.isLoading) {
+        return <Spinner />
     }
 
     return (
@@ -124,7 +174,7 @@ const Profile = () => {
                                 {foundProfileData.followers.followerIds.length} Followers
                             </Text>
                             {
-                                params.profileName !== user.displayName ? <FollowUnfollowButton following={false} targetId={profileSnapshot.docs[0].id} userId={user.uid} /> : <></> 
+                                params.profileName !== user.displayName ? <FollowUnfollowButton following={false} targetId={profileSnapshot.docs[0].id} userId={user.uid} authUserDoc={profileSnapshot.docs[0].id} /> : <></> 
                             }
                         </HStack>
                     </Box>
