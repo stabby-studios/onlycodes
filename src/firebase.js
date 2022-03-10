@@ -1,6 +1,6 @@
 // Firebase
 import { initializeApp } from 'firebase/app'
-import { getAuth, GithubAuthProvider } from 'firebase/auth'
+import { getAuth, GithubAuthProvider, GoogleAuthProvider, TwitterAuthProvider } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore';
 
 // TODO: Add sdks for what i wanna use
@@ -18,10 +18,12 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const provider = new GithubAuthProvider();
+const githubProvider = new GithubAuthProvider();
+const googleProvider = new GoogleAuthProvider()
+const twitterProvider = new TwitterAuthProvider();
 const auth = getAuth(app);
 const db = getFirestore(app);
 
 export {
-    app, provider, auth, db
+    app, githubProvider, googleProvider, twitterProvider, auth, db
 }

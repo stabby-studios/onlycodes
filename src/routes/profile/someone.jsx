@@ -8,8 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './profile.css'
 
-const Profile = () => {
-
+const Someone = () => {
     const [profile, setProfile] = useState({});
     let params = useParams();
 
@@ -97,4 +96,5 @@ const Profile = () => {
         </Center>
     )
 }
-export default Profile
+
+export default Someone
