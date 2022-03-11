@@ -42,7 +42,7 @@ const Profile = () => {
                 <Stack spacing={4}>
                     <Box className='profile-banner'>
                         <Avatar
-                            size={'xl'}
+                            size={'2xl'}
                             src={
                                 profile.avatar ? profile.avatar : null
                             }

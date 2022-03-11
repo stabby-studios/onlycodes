@@ -8,11 +8,11 @@ import App from './App';
 /* Route Elements */
 import Home from './routes/home';
 import Feed from './routes/feed/feed';
-import Settings from './routes/settings';
-import Team from './routes/team';
 import Profile from './routes/profile/profile';
 import Login from './routes/auth/login';
 import Register from './routes/auth/register';
+import Someone from './routes/profile/someone';
+import Preferences from './routes/preferences';
 
 /* Chakra ui */
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
@@ -26,7 +26,7 @@ import theme from './theme';
 
 /* React Query */
 import { QueryClient, QueryClientProvider } from 'react-query'
-import Someone from './routes/profile/someone';
+
 
 /* entry point */
 function PrivateRoute({ children }) {
@@ -56,16 +56,7 @@ render(
                                 <Feed />
                             </PrivateRoute>
                         } />
-                        <Route path="/Settings" element={
-                            <PrivateRoute>
-                                <Settings />
-                            </PrivateRoute>
-                        } />
-                        <Route path="/Team" element={
-                            <PrivateRoute>
-                                <Team />
-                            </PrivateRoute>
-                        } />
+
                         <Route path="/">
                             <Route path="/Profile">
                                 <Route path=":id" element={
@@ -80,6 +71,13 @@ render(
                                         <Profile />
                                     </PrivateRoute>
                                 } />
+                                <Route path=':id'>
+                                    <Route path="Preferences" element={
+                                        <PrivateRoute>
+                                            <Preferences />
+                                        </PrivateRoute>
+                                    } />
+                                </Route>
                             </Route>
                         </Route>
                         <Route path="/Login" element={<Login />} />

@@ -22,7 +22,7 @@ import './navbar.css'
 import { getAuth, signOut } from 'firebase/auth';
 import { app } from '../../firebase';
 
-const Links = ['Feed', 'Settings', 'Team'];
+const Links = ['Feed'];
 
 const NavLink = ({ children }) => (
     <Link
@@ -93,7 +93,7 @@ export default function Navbar({user}) {
                             </MenuItem>
                             <MenuDivider />
                             <MenuItem>
-                                <Link href='/preferences' px={2}
+                                <Link href={'/Self/' + user.uid + '/Preferences'} px={2}
                                     py={1}
                                     rounded={'md'}
                                     _hover={{
