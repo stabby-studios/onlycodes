@@ -2,7 +2,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { db } from '../../firebase';
-import { faFacebook, faGithub, faInstagram, faStackExchange, faStackOverflow, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faInstagram, faStackExchange, faStackOverflow, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { Box, Stack, HStack, VStack, Text, Center, Avatar } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -76,9 +76,6 @@ const Someone = () => {
                             </Text>
                             <Text fontSize='lg' className='social-btn'>
                                 <FontAwesomeIcon icon={faInstagram} />
-                            </Text>
-                            <Text fontSize='lg' className='social-btn'>
-                                <FontAwesomeIcon icon={faFacebook} />
                             </Text>
                             <Text fontSize='lg' className='social-btn'>
                                 <FontAwesomeIcon icon={faGithub} />

@@ -64,7 +64,7 @@ export default function Navbar({user}) {
                             cursor={'pointer'}
                             minW={0}>
                             <Avatar
-                                size={'lg'}
+                                size={'xl'}
                                 src={
                                     user.avatar ? user.avatar : null
                                 }
@@ -121,8 +121,8 @@ export default function Navbar({user}) {
 
     return (
         <>
-            <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} className="sticky">
-                <Flex h={20} alignItems={'center'} justifyContent={'space-between'}>
+            <Box bg={'gray.900'} px={4} className="sticky" >
+                <Flex  alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}
                         icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}

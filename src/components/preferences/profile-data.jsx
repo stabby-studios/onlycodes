@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Center, Flex, FormControl, FormLabel, GridItem, Input, InputGroup, InputLeftAddon, SimpleGrid, Stack, Textarea } from '@chakra-ui/react';
+import { Avatar, Box, Button, Center, Flex, FormControl, FormLabel, GridItem, Input, InputGroup, InputLeftAddon, SimpleGrid, Stack, Textarea, useToast } from '@chakra-ui/react';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faAt, faCheck, faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +7,10 @@ import { collection, doc, getDocs, limit, query, where } from 'firebase/firestor
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { db } from '../../firebase';
 
-const SaveDataButton = ({email, bio, name, documentId}) => {
+const SaveDataButton = ({ email, bio, name, documentId }) => {
+
+    const toast = useToast();    
+
     /* firestore transaction when the profile save button has been clicked! */
     const col = collection(db, "users");
     const ref = doc(col, documentId);
@@ -34,12 +37,34 @@ const SaveDataButton = ({email, bio, name, documentId}) => {
         event.preventDefault();
 
         transaction.mutate();
+
+        if (transaction.isError) {
+            toast({
+                title: 'Error',
+                description: 'Oops something went wrong...',
+                status: 'error',
+                duration: 3000,
+                isClosable: false
+            });
+
+            return;
+        }
+
+        toast({
+            title: 'Success',
+            description: 'Successfully updated profile',
+            status: 'success',
+            duration: 3000,
+            isClosable: false
+        });
     }
 
     return (
-        <Button size='lg' float={'right'} onClick={handleSaveProfileChangeOnClick}>
-            <FontAwesomeIcon icon={faCheck} color="#00abb1" />
-        </Button>
+        <>
+            <Button size='lg' float={'right'} onClick={handleSaveProfileChangeOnClick}>
+                <FontAwesomeIcon icon={faCheck} color="#00abb1" />
+            </Button>
+        </>
     )
 }
 
@@ -180,9 +205,9 @@ const ProfileData = ({ profile }) => {
                                     </FormControl>
 
                                     <GridItem colSpan={[3, 2]}>
-                                       {
-                                           documentId?  <SaveDataButton bio={bioField} name={usernameField} email={emailField} documentId={documentId} /> : <></>
-                                       }
+                                        {
+                                            documentId ? <SaveDataButton bio={bioField} name={usernameField} email={emailField} documentId={documentId} /> : <></>
+                                        }
                                     </GridItem>
                                 </SimpleGrid>
                             </Stack>
