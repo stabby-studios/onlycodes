@@ -2,11 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom';
 import { db } from '../firebase';
 import { getDocs, collection } from 'firebase/firestore';
-import { Box, Stack, Flex, Center,  Tabs, TabPanels, TabPanel, TabList, Tab } from '@chakra-ui/react';
+import { Box, Stack, Flex, Center, Tabs, TabPanels, TabPanel, TabList, Tab } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProfileData from '../components/preferences/profile-data';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
-import { faBrush, faGears } from '@fortawesome/free-solid-svg-icons';
+import { faBrush, faGears, faHashtag } from '@fortawesome/free-solid-svg-icons';
+import ProfileSocials from '../components/preferences/profile-socials';
 
 
 const Preferences = () => {
@@ -45,7 +46,8 @@ const Preferences = () => {
                 <Center>
                     <Tabs orientation="vertical" isLazy>
                         <TabList>
-                            <Tab><FontAwesomeIcon icon={faUser}/> Profile</Tab>
+                            <Tab><FontAwesomeIcon icon={faUser} /> Profile</Tab>
+                            <Tab><FontAwesomeIcon icon={faHashtag} /> Socials</Tab>
                             <Tab><FontAwesomeIcon icon={faBrush} /> Appearence</Tab>
                             <Tab><FontAwesomeIcon icon={faGears} /> Settings</Tab>
                         </TabList>
@@ -54,7 +56,10 @@ const Preferences = () => {
                                 <ProfileData profile={profile} />
                             </TabPanel>
                             <TabPanel>
-                                <Box width='750px'  shadow="base" rounded={[null, "md"]} overflow={{ sm: 'hidden' }}>
+                                <ProfileSocials profile={profile} />
+                            </TabPanel>
+                            <TabPanel>
+                                <Box width='750px' shadow="base" rounded={[null, "md"]} overflow={{ sm: 'hidden' }}>
                                     <Stack px={4} py={5} bg={'gray.700'} spacing={6} p={{ sm: 6 }} height='580px'>
                                         <h1>2nd tab</h1>
                                     </Stack>

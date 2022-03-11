@@ -50,7 +50,7 @@ export default function App() {
     return (
         <div>
             <Navbar user={authedUser} />
-            <div style={{ position: 'relative', top: '75px' }}>
+            <div style={{ position: 'relative', top: '95px' }}>
                 <Outlet />
             </div>
         </div>
