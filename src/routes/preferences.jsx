@@ -12,6 +12,7 @@ import ProfileSocials from '../components/preferences/profile-socials';
 
 const Preferences = () => {
     const [profile, setProfile] = useState({});
+    const [documentId, setDocumentId] = useState('')
 
     let params = useParams();
 
@@ -19,6 +20,10 @@ const Preferences = () => {
         try {
             const profileSnapshot = await getDocs(collection(db, "users"));
             const data = [];
+
+            if (profileSnapshot) {
+                setDocumentId(profileSnapshot.docs[0].id);
+            }
 
             profileSnapshot.forEach((doc) => {
                 data.push(doc.data());
@@ -56,7 +61,7 @@ const Preferences = () => {
                                 <ProfileData profile={profile} />
                             </TabPanel>
                             <TabPanel>
-                                <ProfileSocials profile={profile} />
+                                <ProfileSocials profile={profile} documentId={documentId} />
                             </TabPanel>
                             <TabPanel>
                                 <Box width='750px' shadow="base" rounded={[null, "md"]} overflow={{ sm: 'hidden' }}>

@@ -23,7 +23,14 @@ const signInGithub = async () => {
                 following: {
                     followedUsers: []
                 },
-                bio: ""
+                bio: "",
+                socials: {
+                    twitter: '',
+                    instagram: '',
+                    stackoverflow: '',
+                    stackexchange: '',
+                    github: user.reloadUserInfo.screenName
+                }
             });
         }
     } catch (e) {
@@ -52,7 +59,14 @@ const signInGoogle = async () => {
                 following: {
                     followedUsers: []
                 },
-                bio: ""
+                bio: "",
+                socials: {
+                    twitter: '',
+                    instagram: '',
+                    stackoverflow: '',
+                    stackexchange: '',
+                    github: ''
+                }
             });
         }
     } catch (e) {
@@ -82,7 +96,14 @@ const signInTwitter = async () => {
                 following: {
                     followedUsers: []
                 },
-                bio: ""
+                bio: "",
+                socials: {
+                    twitter: user.reloadUserInfo.screenName,
+                    instagram: '',
+                    stackoverflow: '',
+                    stackexchange: '',
+                    github: ''
+                }
             });
         }
     } catch (e) {

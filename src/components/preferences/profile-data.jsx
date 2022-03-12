@@ -7,7 +7,7 @@ import { collection, doc, getDocs, limit, query, where } from 'firebase/firestor
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { db } from '../../firebase';
 
-const SaveDataButton = ({ email, bio, name, documentId }) => {
+const SaveDataButton = ({ email, data, documentId}) => {
 
     const toast = useToast();    
 
@@ -21,9 +21,9 @@ const SaveDataButton = ({ email, bio, name, documentId }) => {
         let savedUser = u.data();
 
         let userData = {
-            email: email,
-            bio: bio,
-            name: name
+            email: data.emailField,
+            bio: data.bioField,
+            name: data.usernameField
         }
 
         savedUser = userData
@@ -92,11 +92,29 @@ const ProfileData = ({ profile }) => {
 
     useEffect(() => {
         if (!profile) {
-            return <>Loading...</>
+            return;
+        }
+
+        if (profile.name !== undefined || profile.name !== "") {
+            setUsernameField(profile.name);
+        } else {
+            setUsernameField('');
+        }
+
+        if (profile.email !== undefined || profile.email !== "") {
+            setEmailField(profile.email)
+        } else {
+            setEmailField('');
+        }
+
+        if (profile.bio !== undefined || profile.bio !== "") {
+            setBioField(profile.bio);
+        } else {
+            setBioField('');
         }
 
         fetchUserDoc();
-    }, [fetchUserDoc, profile]);
+    }, [profile, fetchUserDoc]);
 
 
 
@@ -206,7 +224,7 @@ const ProfileData = ({ profile }) => {
 
                                     <GridItem colSpan={[3, 2]}>
                                         {
-                                            documentId ? <SaveDataButton bio={bioField} name={usernameField} email={emailField} documentId={documentId} /> : <></>
+                                            documentId ? <SaveDataButton data={{bioField, usernameField, emailField }} documentId={documentId} /> : <></>
                                         }
                                     </GridItem>
                                 </SimpleGrid>
