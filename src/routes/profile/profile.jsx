@@ -76,7 +76,7 @@ const Profile = () => {
                                 profile.socials?.twitter !== '' ?
                                     <Link href={"https://twitter.com/" + profile.socials?.twitter} target="_blank">
                                         <Text fontSize='lg' className='social-btn'>
-                                            <FontAwesomeIcon icon={faTwitter} />
+                                            <FontAwesomeIcon icon={faTwitter} /> {profile.socials?.twitter}
                                         </Text>
                                     </Link> :
                                     <></>
@@ -85,7 +85,7 @@ const Profile = () => {
                                 profile.socials?.instagram !== '' ?
                                     <Link href={"https://instagram.com/" + profile.socials?.instagram} target="_blank">
                                         <Text fontSize='lg' className='social-btn'>
-                                            <FontAwesomeIcon icon={faInstagram} />
+                                            <FontAwesomeIcon icon={faInstagram} /> {profile.socials?.instagram}
                                         </Text>
                                     </Link> :
                                     <></>
@@ -94,20 +94,20 @@ const Profile = () => {
                                 profile.socials?.github !== '' ?
                                     <Link href={"https://github.com/" + profile.socials?.github} target="_blank">
                                         <Text fontSize='lg' className='social-btn'>
-                                            <FontAwesomeIcon icon={faGithub} />
+                                            <FontAwesomeIcon icon={faGithub} /> {profile.socials?.github}
                                         </Text>
                                     </Link> :
                                     <></>
                             }
                             {
-                                profile.socials?.stackexchange !== '' ?
+                                profile.socials?.stackexchange ?
                                     <Text fontSize='lg' className='social-btn'>
                                         <FontAwesomeIcon icon={faStackExchange} />
                                     </Text> :
                                     <></>
                             }
                             {
-                                profile.socials?.stackoverflow !== '' ?
+                                profile.socials?.stackoverflow ?
                                     <Text fontSize='lg' className='social-btn'>
                                         <FontAwesomeIcon icon={faStackOverflow} />
                                     </Text> :

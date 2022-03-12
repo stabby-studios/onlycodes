@@ -39,6 +39,15 @@
     justify-content: space-evenly;
 }
 
+.profile-ext-stack a {
+    display: block;
+    padding: 16px;
+}
+
+.profile-ext-stack a:hover {
+    text-decoration: none;
+}
+
 .social-btn:hover {
     cursor: pointer;
     transform: scale(1.25);

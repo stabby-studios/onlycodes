@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { db } from '../../firebase';
 import { faGithub, faInstagram, faStackExchange, faStackOverflow, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { Box, Stack, HStack, VStack, Text, Center, Avatar } from '@chakra-ui/react';
+import { Box, Stack, HStack, VStack, Text, Center, Avatar, Link } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './profile.css'
@@ -65,27 +65,53 @@ const Someone = () => {
 
                     {
                         profile.bio ? <Text fontSize='md' className='bio'>
-                        {profile.bio}
-                    </Text> : <></>
+                            {profile.bio}
+                        </Text> : <></>
                     }
 
                     <Box className='profile-externals'>
                         <HStack className='profile-ext-stack'>
-                            <Text fontSize='lg' className='social-btn'>
-                                <FontAwesomeIcon icon={faTwitter} />
-                            </Text>
-                            <Text fontSize='lg' className='social-btn'>
-                                <FontAwesomeIcon icon={faInstagram} />
-                            </Text>
-                            <Text fontSize='lg' className='social-btn'>
-                                <FontAwesomeIcon icon={faGithub} />
-                            </Text>
-                            <Text fontSize='lg' className='social-btn'>
-                                <FontAwesomeIcon icon={faStackExchange} />
-                            </Text>
-                            <Text fontSize='lg' className='social-btn'>
-                                <FontAwesomeIcon icon={faStackOverflow} />
-                            </Text>
+                            {
+                                profile.socials?.twitter !== '' ?
+                                    <Link href={"https://twitter.com/" + profile.socials?.twitter} target="_blank">
+                                        <Text fontSize='lg' className='social-btn'>
+                                            <FontAwesomeIcon icon={faTwitter} /> {profile.socials?.twitter}
+                                        </Text>
+                                    </Link> :
+                                    <></>
+                            }
+                            {
+                                profile.socials?.instagram !== '' ?
+                                    <Link href={"https://instagram.com/" + profile.socials?.instagram} target="_blank">
+                                        <Text fontSize='lg' className='social-btn'>
+                                            <FontAwesomeIcon icon={faInstagram} /> {profile.socials?.instagram}
+                                        </Text>
+                                    </Link> :
+                                    <></>
+                            }
+                            {
+                                profile.socials?.github !== '' ?
+                                    <Link href={"https://github.com/" + profile.socials?.github} target="_blank">
+                                        <Text fontSize='lg' className='social-btn'>
+                                            <FontAwesomeIcon icon={faGithub} /> {profile.socials?.github}
+                                        </Text>
+                                    </Link> :
+                                    <></>
+                            }
+                            {
+                                profile.socials?.stackexchange ?
+                                    <Text fontSize='lg' className='social-btn'>
+                                        <FontAwesomeIcon icon={faStackExchange} />
+                                    </Text> :
+                                    <></>
+                            }
+                            {
+                                profile.socials?.stackoverflow ?
+                                    <Text fontSize='lg' className='social-btn'>
+                                        <FontAwesomeIcon icon={faStackOverflow} />
+                                    </Text> :
+                                    <></>
+                            }
                         </HStack>
                     </Box>
                 </Stack>

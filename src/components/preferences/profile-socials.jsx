@@ -93,17 +93,26 @@ const ProfileSocials = ({ profile, documentId }) => {
             return;
         }
 
-        console.log(profile)
+        console.log(profile.socials)
 
-        // if (profile.socials?.twitter === '') {
-        //     setTwitterField('');
-        // }
-        // if (profile.socials?.instagram === '') {
-        //     setInstagramField('')
-        // }
-        // if (profile.socials?.github === '') {
-        //     setGithubField('')
-        // }
+        if (profile.socials.twitter.length !== 0) {
+            setTwitterField(profile.socials.twitter)
+        } else {
+            setTwitterField('');
+        }
+
+        if (profile.socials.instagram.length !== 0) {
+            setInstagramField(profile.socials.instagram)
+        } else {
+            setInstagramField('')
+        }
+
+        if (profile.socials.github.length !== 0) {
+            setGithubField(profile.socials.github);
+        } else {
+            setGithubField('')
+        }
+        
 
     }, [profile])
 
