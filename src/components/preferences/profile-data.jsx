@@ -3,12 +3,12 @@ import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faAt, faCheck, faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFirestoreTransaction } from '@react-query-firebase/firestore';
-import { collection, doc, getDocs, limit, query, where } from 'firebase/firestore';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { collection, doc} from 'firebase/firestore';
+import React, { useEffect, useRef, useState } from 'react';
 import { db } from '../../firebase';
 import useDocumentId from '../../hooks/useDocumentId';
 
-const SaveDataButton = ({ email, data, documentId}) => {
+const SaveDataButton = ({ data, documentId}) => {
 
     const toast = useToast();    
 
