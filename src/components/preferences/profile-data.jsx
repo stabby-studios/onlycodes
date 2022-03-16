@@ -3,11 +3,12 @@ import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faAt, faCheck, faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFirestoreTransaction } from '@react-query-firebase/firestore';
-import { collection, doc, getDocs, limit, query, where } from 'firebase/firestore';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { collection, doc} from 'firebase/firestore';
+import React, { useEffect, useRef, useState } from 'react';
 import { db } from '../../firebase';
+import useDocumentId from '../../hooks/useDocumentId';
 
-const SaveDataButton = ({ email, data, documentId}) => {
+const SaveDataButton = ({ data, documentId}) => {
 
     const toast = useToast();    
 
@@ -71,24 +72,13 @@ const SaveDataButton = ({ email, data, documentId}) => {
 const ProfileData = ({ profile }) => {
     const avatarUploadRef = useRef(null);
 
-    const [documentId, setDocumentId] = useState('')
-
     const [usernameField, setUsernameField] = useState('');
     const [emailField, setEmailField] = useState('');
     const [bioField, setBioField] = useState('');
     // const [postImage, setPostImage] = useState(null); // TODO: Try and figure this out...
 
     /* Firestore fetch user doc to update the user profile */
-    const fetchUserDoc = useCallback(async () => {
-        if (profile.uid !== undefined) {
-            const userRef = query(collection(db, "users"), limit(1), where("uid", "==", profile.uid))
-            const snapshot = await getDocs(userRef);
-
-            if (snapshot) {
-                setDocumentId(snapshot.docs[0].id);
-            }
-        }
-    }, [profile]);
+    const [docId] = useDocumentId(profile.uid)
 
     useEffect(() => {
         if (!profile) {
@@ -113,8 +103,7 @@ const ProfileData = ({ profile }) => {
             setBioField('');
         }
 
-        fetchUserDoc();
-    }, [profile, fetchUserDoc]);
+    }, [profile]);
 
 
 
@@ -224,7 +213,7 @@ const ProfileData = ({ profile }) => {
 
                                     <GridItem colSpan={[3, 2]}>
                                         {
-                                            documentId ? <SaveDataButton data={{bioField, usernameField, emailField }} documentId={documentId} /> : <></>
+                                            docId ? <SaveDataButton data={{bioField, usernameField, emailField }} documentId={docId} /> : <></>
                                         }
                                     </GridItem>
                                 </SimpleGrid>

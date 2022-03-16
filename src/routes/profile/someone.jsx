@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './profile.css'
 
-import useProfile from '../../hooks/useFetchProfile';
+import useProfile from '../../hooks/useProfile';
 
 const Someone = () => {
     let params = useParams();

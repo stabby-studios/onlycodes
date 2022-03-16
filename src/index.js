@@ -26,6 +26,7 @@ import theme from './theme';
 
 /* React Query */
 import { QueryClient, QueryClientProvider } from 'react-query'
+import SinglePost from './routes/feed/post';
 
 
 /* entry point */
@@ -56,6 +57,12 @@ render(
                                 <Feed />
                             </PrivateRoute>
                         } />
+
+                        <Route path='/Post'>
+                            <Route path=':id' element= {
+                                <SinglePost />
+                            }/>
+                            </Route>
 
                         <Route path="/">
                             <Route path="/Profile">

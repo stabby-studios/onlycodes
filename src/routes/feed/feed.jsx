@@ -6,7 +6,7 @@ import Post from '../../components/post/post';
 import { db, auth } from '../../firebase'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { collection, orderBy, query, getDocs } from 'firebase/firestore';
-import {  useFirestoreQuery } from '@react-query-firebase/firestore';
+import { useFirestoreQuery } from '@react-query-firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 const Feed = () => {
@@ -43,7 +43,7 @@ const Feed = () => {
     }, [error, user])
 
     useEffect(() => {
-        if  (loading) return        
+        if (loading) return
         if (!user) {
             return navigate('/login')
         }
@@ -56,10 +56,10 @@ const Feed = () => {
     if (firestoreQuery.isLoading) {
         return (
             <>
-                <Flex>
+                <Flex align={'center'} justify={'center'} bg={'gray.800'}>
                     <Center>
                         <Stack>
-                            <Spinner color='red.500' size={'xl'}/>
+                            <Spinner size={'xl'} />
                         </Stack>
                     </Center>
                 </Flex>
@@ -68,6 +68,7 @@ const Feed = () => {
     }
 
     const snapshot = firestoreQuery.data;
+
     return (
         <Flex
             align={'center'}

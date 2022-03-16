@@ -2,7 +2,11 @@
     display: block;
     border: 1px solid darkgrey;
     border-radius: 6px;
+    cursor: pointer;
+}
 
+.post-p {
+    cursor: pointer;
 }
 
 .post-data {
