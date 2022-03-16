@@ -5,7 +5,7 @@ import { Box, Stack, HStack, VStack, Text, Center, Avatar, Link } from '@chakra-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './profile.css'
-import useProfile from '../../hooks/useFetchProfile';
+import useProfile from '../../hooks/useProfile';
 
 const Profile = () => {
 
