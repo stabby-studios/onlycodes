@@ -16,6 +16,7 @@ const Preferences = () => {
 
     let params = useParams();
 
+    // not using the useProfile hook beacuse this needs to set the document id for the preferences. page
     const fetchProfile = useCallback(async () => {
         try {
             const profileSnapshot = await getDocs(collection(db, "users"));

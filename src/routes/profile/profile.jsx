@@ -1,42 +1,17 @@
-import { collection, getDocs } from 'firebase/firestore';
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
-import { db } from '../../firebase';
 import { faGithub, faInstagram, faStackExchange, faStackOverflow, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { Box, Stack, HStack, VStack, Text, Center, Avatar, Link } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './profile.css'
+import useProfile from '../../hooks/useFetchProfile';
 
 const Profile = () => {
 
-    const [profile, setProfile] = useState({});
     let params = useParams();
 
-    const fetchProfile = useCallback(async () => {
-        try {
-            const profileSnapshot = await getDocs(collection(db, "users"));
-            const data = [];
-
-            profileSnapshot.forEach((doc) => {
-                data.push(doc.data());
-            });
-
-            const foundProfile = data.find(p => p['uid'] === params.id);
-            setProfile(foundProfile);
-
-        } catch (e) {
-            console.error(e);
-        }
-    }, [params.id]);
-
-    useEffect(() => {
-
-        fetchProfile();
-
-    }, [fetchProfile])
-
-    console.log(profile)
+    const [data] = useProfile(params.id)
 
     return (
         <Center>
@@ -46,19 +21,19 @@ const Profile = () => {
                         <Avatar
                             size={'2xl'}
                             src={
-                                profile.avatar ? profile.avatar : null
+                                data.avatar ? data.avatar : null
                             }
                         />
                         <Text fontSize='2xl' className='profile-name'>
-                            @{profile.name}
+                            @{data.name}
                         </Text>
 
                         <HStack>
                             <Text className='profile-data-text' fontSize='md'>
-                                {profile.following?.followedUsers?.length} Following
+                                {data.following?.followedUsers?.length} Following
                             </Text>
                             <Text className='profile-data-text' fontSize='md'>
-                                {profile.followers?.followerId?.length}  Followers
+                                {data.followers?.followerId?.length}  Followers
                             </Text>
                         </HStack>
                     </Box>
@@ -67,47 +42,47 @@ const Profile = () => {
                 <Stack spacing={4}>
 
                     {
-                        profile.bio ? <Text fontSize='md' className='bio'> {profile.bio} </Text> : <></>
+                        data.bio ? <Text fontSize='md' className='bio'> {data.bio} </Text> : <></>
                     }
 
                     <Box className='profile-externals'>
                         <HStack className='profile-ext-stack'>
                             {
-                                profile.socials?.twitter !== '' ?
-                                    <Link href={"https://twitter.com/" + profile.socials?.twitter} target="_blank">
+                                data.socials?.twitter !== '' ?
+                                    <Link href={"https://twitter.com/" + data.socials?.twitter} target="_blank">
                                         <Text fontSize='lg' className='social-btn'>
-                                            <FontAwesomeIcon icon={faTwitter} /> {profile.socials?.twitter}
+                                            <FontAwesomeIcon icon={faTwitter} /> {data.socials?.twitter}
                                         </Text>
                                     </Link> :
                                     <></>
                             }
                             {
-                                profile.socials?.instagram !== '' ?
-                                    <Link href={"https://instagram.com/" + profile.socials?.instagram} target="_blank">
+                                data.socials?.instagram !== '' ?
+                                    <Link href={"https://instagram.com/" + data.socials?.instagram} target="_blank">
                                         <Text fontSize='lg' className='social-btn'>
-                                            <FontAwesomeIcon icon={faInstagram} /> {profile.socials?.instagram}
+                                            <FontAwesomeIcon icon={faInstagram} /> {data.socials?.instagram}
                                         </Text>
                                     </Link> :
                                     <></>
                             }
                             {
-                                profile.socials?.github !== '' ?
-                                    <Link href={"https://github.com/" + profile.socials?.github} target="_blank">
+                                data.socials?.github !== '' ?
+                                    <Link href={"https://github.com/" + data.socials?.github} target="_blank">
                                         <Text fontSize='lg' className='social-btn'>
-                                            <FontAwesomeIcon icon={faGithub} /> {profile.socials?.github}
+                                            <FontAwesomeIcon icon={faGithub} /> {data.socials?.github}
                                         </Text>
                                     </Link> :
                                     <></>
                             }
                             {
-                                profile.socials?.stackexchange ?
+                                data.socials?.stackexchange ?
                                     <Text fontSize='lg' className='social-btn'>
                                         <FontAwesomeIcon icon={faStackExchange} />
                                     </Text> :
                                     <></>
                             }
                             {
-                                profile.socials?.stackoverflow ?
+                                data.socials?.stackoverflow ?
                                     <Text fontSize='lg' className='social-btn'>
                                         <FontAwesomeIcon icon={faStackOverflow} />
                                     </Text> :
