@@ -24,6 +24,7 @@ import { db, auth } from "../../firebase";
 import { collection, doc } from 'firebase/firestore'
 import { useFirestoreDocument, useFirestoreTransaction } from "@react-query-firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
 
 const PostActions = ({ postId, userId }) => {
 
@@ -126,6 +127,7 @@ const PostActions = ({ postId, userId }) => {
 export default function Post({ post, postId }) {
 
     const [user, loading] = useAuthState(auth);
+    const nav = useNavigate()
 
     useEffect(() => {
 
@@ -139,8 +141,14 @@ export default function Post({ post, postId }) {
 
     }, [user, loading])
 
+    const handleClickOnPost = (event) => {
+        event.preventDefault()
+
+        nav("/Post/" + postId)
+    }
+
     return (
-        <Center py={6}>
+        <Center py={6} onClick={handleClickOnPost} className="post-p">
             <Box
                 maxW={"445px"}
                 w={"445px"}
