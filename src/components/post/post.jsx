@@ -31,6 +31,7 @@ import { collection, doc } from 'firebase/firestore'
 import { useFirestoreDocument, useFirestoreTransaction } from "@react-query-firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
+import useProfile from "../../hooks/useProfile";
 
 const PostActions = ({ postId, userId, post, user }) => {
 
@@ -48,6 +49,8 @@ const PostActions = ({ postId, userId, post, user }) => {
     const postFromDoc = useFirestoreDocument(["posts", postId], docRef, {
         subscribe: true
     });
+
+    const [data] = useProfile(userId)
 
     //#region Like mutation
     const likeMutation = useFirestoreTransaction(fref, async (tsx) => {
@@ -94,9 +97,8 @@ const PostActions = ({ postId, userId, post, user }) => {
 
         return likesOnPost;
     });
-//#endregion
-console.log(user)
-//#region Add reply
+    //#endregion
+    //#region Add reply
     const replyMutation = useFirestoreTransaction(fref, async (tsx) => {
         const doc = await tsx.get(ref);
 
@@ -108,7 +110,7 @@ console.log(user)
                 postContent,
                 userId,
                 user: {
-                    name: user.displayName,
+                    name: data.name,
                     avatar: user.photoURL
                 }
             })
@@ -124,7 +126,7 @@ console.log(user)
             postContent,
             userId,
             user: {
-                name: user.displayName,
+                name: data.name,
                 avatar: user.photoURL
             },
             createdAt: new Date()
@@ -136,7 +138,7 @@ console.log(user)
 
         return replies
     })
-//#endregion
+    //#endregion
 
 
     if (postFromDoc.isLoading) {
@@ -227,6 +229,8 @@ export default function Post({ post, postId }) {
     const [user, loading] = useAuthState(auth);
     const nav = useNavigate()
 
+
+
     useEffect(() => {
 
         if (loading) {
@@ -269,7 +273,9 @@ export default function Post({ post, postId }) {
                     </Box>
                 )}
                 <Stack onClick={handleClickOnPost}>
-                    <Text color={"white"}>{post.content}</Text>
+                    <Stack className='post-content-text'>
+                        <Text color={"white"}>{post.content}</Text>
+                    </Stack>
                     <Box className="post-stats">
                         <Text fontSize="sm">{post.replies.length} Commits</Text>
                         <Text fontSize="sm">{post.likes.uid.length} Likes</Text>

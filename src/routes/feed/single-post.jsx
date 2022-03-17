@@ -8,6 +8,8 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import useGetPost from '../../hooks/useGetPost'
 
+import './feed.css'
+
 const SinglePost = () => {
 
     let params = useParams()
@@ -26,6 +28,7 @@ const SinglePost = () => {
         )
     }
 
+    console.log(data)
     return (
         <Center py={6}>
             <Stack>
@@ -54,7 +57,9 @@ const SinglePost = () => {
                         </Box>
                     )}
                     <Stack>
-                        <Text color={"white"}>{data.content}</Text>
+                       <Stack className='post-content-text'>
+                            <Text color={"white"}>{data.content}</Text>
+                       </Stack>
                         <Box className="post-stats">
                             <Text fontSize="sm">{data.replies.length} Commits</Text>
                             <Text fontSize="sm">{data.likes.uid.length} Likes</Text>
@@ -78,9 +83,9 @@ const SinglePost = () => {
                     {/* <PostActions postId={params.id} userId={user.uid} /> */}
                 </Box>
 
-                {data.replies.length !== 0 && data.replies.map((reply) => {
+                {data.replies.length !== 0 && data.replies.map((reply, index) => {
                     return <Box
-                        key={data.replies.indexOf}
+                        key={index}
                         maxW={"445px"}
                         w={"445px"}
                         bg={'gray.900'}
@@ -89,7 +94,8 @@ const SinglePost = () => {
                         p={6}
                         overflow={"hidden"}
                     >
-                        <Stack>
+                        <Stack className='post-content-text'>
+                            <Text color={'gray.600'} fontSize={'sm'}>Replying to @{data.user.username}</Text>
                             <Text color={"white"}>{reply.postContent}</Text>
                         </Stack>
                         <Stack mt={6} direction={"row"} spacing={4} align={"center"}>

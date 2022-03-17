@@ -26,7 +26,7 @@ import theme from './theme';
 
 /* React Query */
 import { QueryClient, QueryClientProvider } from 'react-query'
-import SinglePost from './routes/feed/post';
+import SinglePost from './routes/feed/single-post';
 
 
 /* entry point */

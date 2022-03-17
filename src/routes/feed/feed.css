@@ -3,6 +3,8 @@
     top: 10px;
 }
 
-
-
-
+.post-content-text {
+    border: 1px solid #949494;
+    padding: 12px;
+    border-radius: 10px;
+}
