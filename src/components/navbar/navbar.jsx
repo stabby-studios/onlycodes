@@ -14,12 +14,15 @@ import {
     MenuDivider,
     useDisclosure,
     Stack,
+    Text
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import './navbar.css'
 
 import { getAuth, signOut } from 'firebase/auth';
 import { app } from '../../firebase';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCode } from '@fortawesome/free-solid-svg-icons';
 
 const Links = ['Feed'];
 
@@ -39,7 +42,7 @@ const NavLink = ({ children }) => (
 
 const auth = getAuth(app);
 
-export default function Navbar({user}) {
+export default function Navbar({ user }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleLogout = () => {
@@ -51,7 +54,7 @@ export default function Navbar({user}) {
         })
     }
 
-    const UserMenu = ({user}) => {
+    const UserMenu = ({ user }) => {
         return (
             <>
                 <Flex alignItems={'center'}>
@@ -121,7 +124,7 @@ export default function Navbar({user}) {
     return (
         <>
             <Box bg={'gray.900'} px={4} className="sticky" >
-                <Flex  alignItems={'center'} justifyContent={'space-between'}>
+                <Flex alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}
                         icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
@@ -130,17 +133,24 @@ export default function Navbar({user}) {
                         onClick={isOpen ? onClose : onOpen}
                     />
                     <HStack spacing={8} alignItems={'center'}>
-                        <Box>Logo</Box>
-                        <HStack
+                        <Box>
+                            <Text fontSize="7xl">
+                                <FontAwesomeIcon icon={faCode} />
+                            </Text>
+                        </Box>
+                        {Object.keys(user).length !== 0 ? <HStack
                             as={'nav'}
                             spacing={4}
                             display={{ base: 'none', md: 'flex' }}>
                             {Links.map((link) => (
                                 <NavLink key={link}>{link}</NavLink>
                             ))}
-                        </HStack>
+                        </HStack> : <></>}
                     </HStack>
-                    <UserMenu user={user} />
+
+                    {
+                        Object.keys(user).length !== 0 ? <UserMenu user={user} /> : <></>
+                    }
                 </Flex>
 
                 {isOpen ? (
