@@ -112,7 +112,8 @@ const PostActions = ({ postId, userId, post, user }) => {
                 user: {
                     name: data.name,
                     avatar: user.photoURL
-                }
+                },
+                createdAt: new Date()
             })
 
             tsx.update(ref, {
