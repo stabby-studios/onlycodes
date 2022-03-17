@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom';
 import { db } from '../firebase';
-import { getDocs, collection } from 'firebase/firestore';
+import { getDocs, collection, where } from 'firebase/firestore';
 import { Box, Stack, Flex, Center, Tabs, TabPanels, TabPanel, TabList, Tab } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProfileData from '../components/preferences/profile-data';
@@ -19,15 +19,15 @@ const Preferences = () => {
     // not using the useProfile hook beacuse this needs to set the document id for the preferences. page
     const fetchProfile = useCallback(async () => {
         try {
-            const profileSnapshot = await getDocs(collection(db, "users"));
+
+            const profileSnapshot = await getDocs(collection(db, "users"), where("uid", "==", params.id));
             const data = [];
 
-            if (profileSnapshot) {
-                setDocumentId(profileSnapshot.docs[0].id);
-            }
-
             profileSnapshot.forEach((doc) => {
-                data.push(doc.data());
+                if (doc.data().uid === params.id) {
+                    setDocumentId(doc.id);
+                    data.push(doc.data());
+                }
             });
 
             const foundProfile = data.find(p => p['uid'] === params.id);
@@ -46,6 +46,7 @@ const Preferences = () => {
 
     }, [fetchProfile])
 
+    console.log(documentId)
     return (
         <>
             <Flex align={'center'} justify={'center'} bg={'gray.800'} position={'relative'} top={'25px'}>
