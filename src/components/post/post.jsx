@@ -11,7 +11,7 @@ import {
     ButtonGroup,
     useDisclosure,
     Modal, ModalOverlay, ModalContent,
-    ModalHeader, ModalFooter, ModalBody,
+    ModalFooter, ModalBody,
     ModalCloseButton, Textarea
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
