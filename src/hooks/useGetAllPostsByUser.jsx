@@ -9,8 +9,6 @@ const useGetAllPostsByUser = (userUid) => {
     useEffect(() => {
         if (userUid === undefined) return;
 
-        console.log(userUid)
-
         const fetchAllPosts = async () => {
             // const userPostsRef = query(collection(db, "posts", where(new FieldPath("user", "uid"), "==", userUid)))
 

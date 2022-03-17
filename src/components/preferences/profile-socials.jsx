@@ -19,19 +19,19 @@ const ProfileSaveSocialsButton = ({ documentId, data }) => {
 
         let savedUser = u.data();
 
-        console.log(savedUser)
-
-        let userSocialsData = {
+        let socials = {
             twitter: data.twitterField,
             instagram: data.instagramField,
-            github: data.githubField,
-        };
+            github: data.githubField
+        }
+
+        savedUser.socials = socials
 
         tsx.update(ref, {
-            socials: userSocialsData
+            socials: socials
         })
 
-        return userSocialsData;
+        return savedUser;
     });
 
     const handleSaveSocials = (event) => {
