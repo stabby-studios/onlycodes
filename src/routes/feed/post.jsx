@@ -56,7 +56,7 @@ const SinglePost = () => {
                     <Stack>
                         <Text color={"white"}>{data.content}</Text>
                         <Box className="post-stats">
-                            <Text fontSize="sm">{data.replies} Commits</Text>
+                            <Text fontSize="sm">{data.replies.length} Commits</Text>
                             <Text fontSize="sm">{data.likes.uid.length} Likes</Text>
                             <Text fontSize="sm">{data.forks} Forks</Text>
                         </Box>
@@ -77,6 +77,37 @@ const SinglePost = () => {
                     </Stack>
                     {/* <PostActions postId={params.id} userId={user.uid} /> */}
                 </Box>
+
+                {data.replies.length !== 0 && data.replies.map((reply) => {
+                    return <Box
+                        key={data.replies.indexOf}
+                        maxW={"445px"}
+                        w={"445px"}
+                        bg={'gray.900'}
+                        boxShadow={"2xl"}
+                        rounded={"md"}
+                        p={6}
+                        overflow={"hidden"}
+                    >
+                        <Stack>
+                            <Text color={"white"}>{reply.postContent}</Text>
+                        </Stack>
+                        <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
+                            <Avatar
+                                src={
+                                    reply.user.avatar
+                                }
+                                alt={"Author"}
+                            />
+                             <Stack direction={"column"} spacing={0} fontSize={"sm"}>
+                            <Link href={"profile/" + reply.userId} className="author">
+                                <Text fontWeight={600}>@{reply.user.name}</Text>
+                            </Link>
+                            <Text color={"gray.500"}>{reply.createdAt.toDate().toLocaleString()}</Text>
+                        </Stack>
+                        </Stack>
+                    </Box>
+                })}
             </Stack>
         </Center>
     )

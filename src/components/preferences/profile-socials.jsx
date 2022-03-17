@@ -6,7 +6,6 @@ import { collection, doc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { db } from '../../firebase';
 
-
 const ProfileSaveSocialsButton = ({ documentId, data }) => {
 
     const toast = useToast();

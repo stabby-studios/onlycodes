@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     Box,
     Center,
@@ -9,16 +9,22 @@ import {
     Link,
     Button,
     ButtonGroup,
+    useDisclosure,
+    Modal, ModalOverlay, ModalContent,
+    ModalFooter, ModalBody,
+    ModalCloseButton, Textarea
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faHeart,
     faCodeFork,
     faCodeCommit,
+    faCancel,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faHeart as faHeartRegular
 } from "@fortawesome/free-regular-svg-icons"
+import { faCodeMerge } from "@fortawesome/free-solid-svg-icons";
 import "./post.css";
 import { db, auth } from "../../firebase";
 import { collection, doc } from 'firebase/firestore'
@@ -26,7 +32,13 @@ import { useFirestoreDocument, useFirestoreTransaction } from "@react-query-fire
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 
-const PostActions = ({ postId, userId }) => {
+const PostActions = ({ postId, userId, post, user }) => {
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const [postContent, setPostContent] = useState('');
+    // const [postImage, setPostImage] = useState(null); // TODO: Try and figure this out...
+    const textareaRef = useRef(null)
 
     const col = collection(db, "posts");
     const ref = doc(col, postId.toString());
@@ -37,6 +49,7 @@ const PostActions = ({ postId, userId }) => {
         subscribe: true
     });
 
+    //#region Like mutation
     const likeMutation = useFirestoreTransaction(fref, async (tsx) => {
         // Get the document
         const doc = await tsx.get(ref);
@@ -61,7 +74,7 @@ const PostActions = ({ postId, userId }) => {
             if (index !== -1) {
                 likesOnPost.splice(index, 1);
             }
-            
+
             tsx.update(ref, {
                 likes: {
                     uid: likesOnPost
@@ -81,6 +94,50 @@ const PostActions = ({ postId, userId }) => {
 
         return likesOnPost;
     });
+//#endregion
+console.log(user)
+//#region Add reply
+    const replyMutation = useFirestoreTransaction(fref, async (tsx) => {
+        const doc = await tsx.get(ref);
+
+        var replies = doc.data().replies;
+
+        if (replies.length === 0) {
+            console.log('no replies');
+            replies.push({
+                postContent,
+                userId,
+                user: {
+                    name: user.displayName,
+                    avatar: user.photoURL
+                }
+            })
+
+            tsx.update(ref, {
+                replies: replies
+            })
+
+            return replies
+        }
+
+        replies.push({
+            postContent,
+            userId,
+            user: {
+                name: user.displayName,
+                avatar: user.photoURL
+            },
+            createdAt: new Date()
+        })
+
+        tsx.update(ref, {
+            replies: replies
+        })
+
+        return replies
+    })
+//#endregion
+
 
     if (postFromDoc.isLoading) {
         return <>Loading post...</>
@@ -97,11 +154,27 @@ const PostActions = ({ postId, userId }) => {
     const handleClickAddReply = (event) => {
         event.preventDefault()
         console.log('clicked add reply');
+
+        onOpen();
     }
 
     const handleClickFork = (event) => {
         event.preventDefault()
         console.log('clicked fork');
+    }
+
+
+    const handleChangePostContent = (event) => {
+        event.preventDefault();
+
+        setPostContent(event.target.value);
+    }
+
+    const handleClickReplyPost = (event) => {
+        event.preventDefault()
+
+        // add logic to reply to the post.
+        replyMutation.mutate()
     }
 
     return (
@@ -120,6 +193,31 @@ const PostActions = ({ postId, userId }) => {
                     <FontAwesomeIcon icon={faCodeFork} />
                 </Button>
             </ButtonGroup>
+
+            <>
+                <Modal isOpen={isOpen} onClose={onClose} isCentered >
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalCloseButton />
+                        <ModalBody>
+                            <Box className="new-post">
+                                <Stack spacing={4}>
+                                    <Text fontSize='2xl'>Replying to {post.user.username}</Text>
+                                    <Textarea placeholder="What's on your mind?" onChange={handleChangePostContent} ref={textareaRef} />
+                                </Stack>
+                            </Box>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button colorScheme='blue' mr={3} onClick={onClose}>
+                                <FontAwesomeIcon icon={faCancel} /> Cancel
+                            </Button>
+                            <Button variant='solid' onClick={handleClickReplyPost}>
+                                <FontAwesomeIcon icon={faCodeMerge} /> Reply
+                            </Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
+            </>
         </React.Fragment>
     );
 };
@@ -148,7 +246,7 @@ export default function Post({ post, postId }) {
     }
 
     return (
-        <Center py={6} onClick={handleClickOnPost} className="post-p">
+        <Center py={6} className="post-p">
             <Box
                 maxW={"445px"}
                 w={"445px"}
@@ -170,10 +268,10 @@ export default function Post({ post, postId }) {
                         {<Image src={post.image} layout={"fill"} />}
                     </Box>
                 )}
-                <Stack>
+                <Stack onClick={handleClickOnPost}>
                     <Text color={"white"}>{post.content}</Text>
                     <Box className="post-stats">
-                        <Text fontSize="sm">{post.replies} Commits</Text>
+                        <Text fontSize="sm">{post.replies.length} Commits</Text>
                         <Text fontSize="sm">{post.likes.uid.length} Likes</Text>
                         <Text fontSize="sm">{post.forks} Forks</Text>
                     </Box>
@@ -192,7 +290,7 @@ export default function Post({ post, postId }) {
                         <Text color={"gray.500"}>{post.createdAt.toDate().toLocaleString()}</Text>
                     </Stack>
                 </Stack>
-                <PostActions postId={postId} userId={user.uid} />
+                <PostActions postId={postId} userId={user.uid} post={post} user={user} />
             </Box>
         </Center>
     );
