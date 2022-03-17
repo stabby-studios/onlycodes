@@ -6,7 +6,7 @@ import { useFirestoreTransaction } from '@react-query-firebase/firestore';
 import { collection, doc} from 'firebase/firestore';
 import React, { useEffect, useRef, useState } from 'react';
 import { db } from '../../firebase';
-import useDocumentId from '../../hooks/useDocumentId';
+import useGetDocumentIdByUid from '../../hooks/useGetDocumentIdByUid';
 
 const SaveDataButton = ({ data, documentId}) => {
 
@@ -78,7 +78,7 @@ const ProfileData = ({ profile }) => {
     // const [postImage, setPostImage] = useState(null); // TODO: Try and figure this out...
 
     /* Firestore fetch user doc to update the user profile */
-    const [docId] = useDocumentId(profile.uid)
+    const [docId] = useGetDocumentIdByUid(profile.uid)
 
     useEffect(() => {
         if (!profile) {

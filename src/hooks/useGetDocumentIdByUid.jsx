@@ -2,7 +2,7 @@ import {collection, getDocs, limit, query, where} from 'firebase/firestore'
 import {useState, useEffect} from 'react'
 import { db } from '../firebase';
 
-const useDocumentId = (profileId) => {
+const useGetDocumentIdByUid = (profileId) => {
 
     const [docId, setDocId] = useState(null)
 
@@ -30,4 +30,4 @@ const useDocumentId = (profileId) => {
     return [docId];
 }
 
-export default useDocumentId
+export default useGetDocumentIdByUid
