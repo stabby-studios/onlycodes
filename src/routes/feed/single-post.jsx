@@ -109,7 +109,7 @@ const SinglePost = () => {
                             <Link href={"profile/" + reply.userId} className="author">
                                 <Text fontWeight={600}>@{reply.user.name}</Text>
                             </Link>
-                            <Text color={"gray.500"}>{reply.createdAt.toDate().toLocaleString()}</Text>
+                            <Text color={"gray.500"}>{reply.createdAt?.toDate().toLocaleString()}</Text>
                         </Stack>
                         </Stack>
                     </Box>

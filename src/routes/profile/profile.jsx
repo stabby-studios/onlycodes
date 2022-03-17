@@ -6,12 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './profile.css'
 import useProfile from '../../hooks/useProfile';
+import useGetAllPostsByUser from '../../hooks/useGetAllPostsByUser';
+import Post from '../../components/post/post';
 
 const Profile = () => {
 
     let params = useParams();
 
     const [data] = useProfile(params.id)
+    const [userPosts] = useGetAllPostsByUser(params.id)
 
     return (
         <Center>
@@ -91,6 +94,14 @@ const Profile = () => {
                         </HStack>
                     </Box>
                 </Stack>
+
+                {
+                    userPosts !== null ? userPosts.map((userPost, index) => {
+                        return (
+                                <Post post={userPost.post} postId={userPost.postDocument} key={index} />
+                        )
+                    }) : <></>
+                }
             </VStack>
         </Center>
     )

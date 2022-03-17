@@ -112,7 +112,8 @@ const PostActions = ({ postId, userId, post, user }) => {
                 user: {
                     name: data.name,
                     avatar: user.photoURL
-                }
+                },
+                createdAt: new Date()
             })
 
             tsx.update(ref, {
@@ -249,6 +250,10 @@ export default function Post({ post, postId }) {
         nav("/Post/" + postId)
     }
 
+    const dummyClick = (event) => {
+        event.preventDefault()
+    }
+
     return (
         <Center py={6} className="post-p">
             <Box
@@ -272,7 +277,7 @@ export default function Post({ post, postId }) {
                         {<Image src={post.image} layout={"fill"} />}
                     </Box>
                 )}
-                <Stack onClick={handleClickOnPost}>
+                <Stack onClick={postId !== null ? handleClickOnPost : dummyClick}>
                     <Stack className='post-content-text'>
                         <Text color={"white"}>{post.content}</Text>
                     </Stack>
@@ -296,7 +301,7 @@ export default function Post({ post, postId }) {
                         <Text color={"gray.500"}>{post.createdAt.toDate().toLocaleString()}</Text>
                     </Stack>
                 </Stack>
-                <PostActions postId={postId} userId={user.uid} post={post} user={user} />
+                {postId !== null ? <PostActions postId={postId} userId={user.uid} post={post} user={user} /> : <></>}
             </Box>
         </Center>
     );
