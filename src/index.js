@@ -27,6 +27,7 @@ import theme from './theme';
 /* React Query */
 import { QueryClient, QueryClientProvider } from 'react-query'
 import SinglePost from './routes/feed/single-post';
+import Kill from './routes/auth/force-logout';
 
 
 /* entry point */
@@ -89,6 +90,7 @@ render(
                         </Route>
                         <Route path="/Login" element={<Login />} />
                         <Route path="/Register" element={<Register />} />
+                        <Route path="/kill" element={<Kill />} />
 
                         {/* No match Route should always be at the bottom. */}
                         <Route path="*" element={<div>404 Page Not Found</div>} />

@@ -18,6 +18,10 @@ export default function App() {
             const userSnapshot = await getDocs(collection(db, "users"));
             const data = [];
 
+            if (userSnapshot === null || userSnapshot ===  undefined) {
+                return <> {nav('login')} </>
+            }
+
             userSnapshot.forEach((doc) => {
                 data.push(doc.data());
             });
@@ -30,9 +34,8 @@ export default function App() {
             }
         } catch (e) {
             console.error(error);
-            alert(e);
         }
-    }, [error, user]);
+    }, [error, user, nav]);
 
     useEffect(() => {
 
