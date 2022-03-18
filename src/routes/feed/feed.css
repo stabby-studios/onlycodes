@@ -8,3 +8,28 @@
     padding: 12px;
     border-radius: 10px;
 }
+
+.post-content-text a {
+	color: #009e96;
+	text-decoration: none;
+	display: inline-block;
+	position: relative;
+}
+
+.post-content-text a:after {
+	background: none repeat scroll 0 0 transparent;
+  	bottom: 0;
+  	content: "";
+ 	display: block;
+  	height: 1px;
+ 	left: 50%;
+	position: absolute;
+  	background: #009e96;
+  	transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  	width: 0;
+}
+.post-content-text a:hover:after {
+
+	width: 100%;
+	left: 0;	
+}

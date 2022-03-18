@@ -10,9 +10,9 @@
 
 }
 
-.post-p :hover {
-    border-radius: 16px !important;
-    transition: border-radius ease-in-out 0.3s;
+.align-right {
+	display: flex;
+	align-self: end;
 }
 
 .post-data {

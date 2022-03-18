@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { useEffect, useState } from "react"
 import { db } from "../firebase";
 
@@ -12,7 +12,7 @@ const useGetAllPostsByUser = (userUid) => {
         const fetchAllPosts = async () => {
             // const userPostsRef = query(collection(db, "posts", where(new FieldPath("user", "uid"), "==", userUid)))
 
-            const userRef = query(collection(db, "posts"), where("user.uid", "==", userUid))
+            const userRef = query(collection(db, "posts"), where("user.uid", "==", userUid), orderBy("createdAt", "desc"))
 
             const snapshot = await getDocs(userRef);
 
