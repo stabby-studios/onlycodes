@@ -185,18 +185,31 @@ const PostActions = ({ postId, userId, post, user }) => {
 	return (
 		<React.Fragment>
 			<ButtonGroup variant="outline" spacing="4">
-				<Button onClick={handleClickAddReply}>
+				<button className="w-14 bg-pink-500 rounded h-12 hover:bg-pink-700 transition-colors ease-in-out delay-75" onClick={handleClickAddReply}>
 					<FontAwesomeIcon icon={faCodeCommit} />
-				</Button>
-				<Button onClick={handleClickAddLike}>
-					{/* <FontAwesomeIcon icon={postSnapshot.data().likes.uid.includes(userId.toString()) ? faHeart : faHeartRegular} /> */}
+				</button>
+				{/* <Button onClick={handleClickAddReply}>
+					<FontAwesomeIcon icon={faCodeCommit} />
+				</Button> */}
+				<button className="w-14 bg-pink-500 rounded h-12 hover:bg-pink-700 transition-colors ease-in-out delay-75" onClick={handleClickAddLike}>
 					{
 						postSnapshot.data().likes.uid.includes(userId.toString()) === true ? <FontAwesomeIcon icon={faHeart} /> : <FontAwesomeIcon icon={faHeartRegular} />
 					}
-				</Button>
-				<Button onClick={handleClickFork}>
+				</button>
+
+				{/* <Button onClick={handleClickAddLike}>
+					{
+						postSnapshot.data().likes.uid.includes(userId.toString()) === true ? <FontAwesomeIcon icon={faHeart} /> : <FontAwesomeIcon icon={faHeartRegular} />
+					}
+				</Button> */}
+
+				<button className="w-14 bg-pink-500 rounded h-12 hover:bg-pink-700 transition-colors ease-in-out delay-75" onClick={handleClickFork}>
 					<FontAwesomeIcon icon={faCodeFork} />
-				</Button>
+				</button>
+
+				{/* <Button onClick={handleClickFork}>
+					<FontAwesomeIcon icon={faCodeFork} />
+				</Button> */}
 			</ButtonGroup>
 
 			<>
@@ -281,9 +294,12 @@ export default function Post({ post, postId }) {
 				)}
 				<Stack>
 					<Stack className="align-right">
-						<Button onClick={postId !== null ? handleClickOnPost : dummyClick}>
+						<button className="w-12 bg-pink-500 rounded h-12 hover:bg-pink-700 transition-colors ease-in-out delay-75" onClick={postId !== null ? handleClickOnPost : dummyClick}>
 							<FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-						</Button>
+						</button>
+						{/* <Button onClick={postId !== null ? handleClickOnPost : dummyClick}>
+							<FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+						</Button> */}
 					</Stack>
 					<Stack className='post-content-text'>
 						<Linkify>
@@ -295,6 +311,11 @@ export default function Post({ post, postId }) {
 						<Text fontSize="sm">{post.likes.uid.length} Likes</Text>
 						<Text fontSize="sm">{post.forks} Forks</Text>
 					</Box>
+				</Stack>
+				<Stack marginTop={'50px'}>
+					<Center>
+						{postId !== null ? <PostActions postId={postId} userId={user.uid} post={post} user={user} /> : <></>}
+					</Center>
 				</Stack>
 				<Stack mt={6} direction={"row"} spacing={4} align={"center"}>
 					<Avatar
@@ -310,7 +331,7 @@ export default function Post({ post, postId }) {
 						<Text color={"gray.500"}>{post.createdAt.toDate().toLocaleString()}</Text>
 					</Stack>
 				</Stack>
-				{postId !== null ? <PostActions postId={postId} userId={user.uid} post={post} user={user} /> : <></>}
+
 			</Box>
 		</Center>
 	);

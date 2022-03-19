@@ -6,7 +6,6 @@ import './new-post.css'
 import { collection } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useFirestoreCollectionMutation } from '@react-query-firebase/firestore';
-
 const NewPost = ({loggedInUser}) => {
     const dbRef = collection(db, "posts");
     const mutation = useFirestoreCollectionMutation(dbRef);
@@ -50,8 +49,6 @@ const NewPost = ({loggedInUser}) => {
             forks: [],
             createdAt: new Date()
         });
-
-
     }
 
     return (
@@ -68,9 +65,13 @@ const NewPost = ({loggedInUser}) => {
                     </Button>
 
                 </ButtonGroup>
-                <Button variant='solid' disabled={mutation.isLoading} onClick={handleClickCreateNewPost}>
+                {/* <Button variant='solid' disabled={mutation.isLoading} onClick={handleClickCreateNewPost}>
                     <FontAwesomeIcon icon={faCodeMerge} /> Merge to feed
-                </Button>
+                </Button> */}
+
+				<button disabled={mutation.isLoading} className="w-full bg-pink-500 rounded h-12 hover:bg-pink-700 transition-colors ease-in-out delay-75" onClick={handleClickCreateNewPost}>
+					<FontAwesomeIcon icon={faCodeMerge} /> Merge to feed
+				</button>
             </Stack>
         </Box>
 
