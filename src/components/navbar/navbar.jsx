@@ -64,12 +64,14 @@ export default function Navbar({ user }) {
                             rounded={'full'}
                             variant={'link'}
                             cursor={'pointer'}
-                            minW={0}>
+                            minW={0}
+							>
                             <Avatar
                                 size={'xl'}
                                 src={
                                     user.avatar ? user.avatar : null
                                 }
+								className='navbar-avatar'
                             />
                         </MenuButton>
                         <MenuList>

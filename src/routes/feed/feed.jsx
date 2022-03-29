@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Center, Stack, Flex, Spinner } from '@chakra-ui/react'
+import { Center, Stack, Flex } from '@chakra-ui/react'
 import NewPost from '../../components/new-post/new-post';
 import './feed.css'
 import Post from '../../components/post/post';
@@ -8,6 +8,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { collection, orderBy, query, getDocs } from 'firebase/firestore';
 import { useFirestoreQuery } from '@react-query-firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import SubSpinner from '../../components/utility/SubSpinner/subspinner';
 
 const Feed = () => {
 
@@ -59,7 +60,7 @@ const Feed = () => {
                 <Flex align={'center'} justify={'center'} bg={'gray.800'}>
                     <Center>
                         <Stack>
-                            <Spinner size={'xl'} />
+                            <SubSpinner />
                         </Stack>
                     </Center>
                 </Flex>

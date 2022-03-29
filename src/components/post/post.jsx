@@ -303,7 +303,7 @@ export default function Post({ post, postId }) {
 					</Stack>
 					<Stack className='post-content-text'>
 						<Linkify>
-							<Text color={"white"}>{post.content}</Text>
+							<Text color={"white"} className="hover:text-pink-400 transition-colors">{post.content}</Text>
 						</Linkify>
 					</Stack>
 					<Box className="post-stats">

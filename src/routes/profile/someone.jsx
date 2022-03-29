@@ -9,14 +9,15 @@ import './profile.css'
 import useProfile from '../../hooks/useProfile';
 import useGetAllPostsByUser from '../../hooks/useGetAllPostsByUser';
 import Post from '../../components/post/post';
+import FollowButton from '../../components/follow/follow-button';
+
 
 const Someone = () => {
     let params = useParams();
-
     const [data] = useProfile(params.id)
     const [userPosts] = useGetAllPostsByUser(params.id)
 
-    console.log(userPosts)
+
 
     return (
         <Center>
@@ -40,6 +41,7 @@ const Someone = () => {
                             <Text className='profile-data-text' fontSize='md'>
                                 {data.followers?.followerId?.length}  Followers
                             </Text>
+							<FollowButton followerList={data.followers} />
                         </HStack>
                     </Box>
 
